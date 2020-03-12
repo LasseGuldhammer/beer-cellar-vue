@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <beer-list></beer-list>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BeerList from './components/BeerList'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    BeerList
   }
 }
 </script>
@@ -24,5 +23,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+body {
+  background: #f0f0f0;
+}
+
+.flex {
+  display: flex;
 }
 </style>
