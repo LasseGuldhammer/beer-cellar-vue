@@ -9,7 +9,7 @@
       <input class="beer-item__input" type="number" v-model="beer.size">
       <input class="beer-item__input" type="number" v-model="beer.quantity">
       <input class="beer-item__input" type="date" v-model="beer.date">
-      <input type="submit" value="Save beer" @click.prevent="editBeer">
+      <input type="submit" value="Save beer" @click.prevent="saveBeer">
     </form>
     <form v-if="!beer">
       <input class="beer-item__input" type="text" v-model="newBeer.brewery" required>
@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    editBeer: function () {
+    saveBeer: function () {
       this.$emit('save-beer')
       // this.editing = !this.editing
     },
