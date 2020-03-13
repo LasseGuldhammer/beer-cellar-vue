@@ -1,7 +1,7 @@
 <template>
   <div class="beer-list">
     <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer"></beer-list-item>
-    <beer-list-add-new></beer-list-add-new>
+    <beer-list-add-new @add-beer="updateBeerList"></beer-list-add-new>
   </div>
 </template>
 
@@ -55,6 +55,11 @@ export default {
           maximumAge: 0
         }
       ]
+    }
+  },
+  methods: {
+    updateBeerList: function (beer) {
+      this.beers.push(beer)
     }
   }
 }

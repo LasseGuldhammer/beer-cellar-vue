@@ -5,9 +5,9 @@
       <input class="beer-item__input" type="text" v-model="beer.name" required>
       <input class="beer-item__input" type="text" v-model="beer.style">
       <!-- <input type="number"> to <input type="text" inputmode="numeric" pattern="[0-9]*"> -->
-      <input class="beer-item__input" type="number" v-model="beer.abv" min="0" step="0.1">
-      <input class="beer-item__input" type="number" v-model="beer.size">
-      <input class="beer-item__input" type="number" v-model="beer.quantity">
+      <input class="beer-item__input" type="number" v-model.number="beer.abv" min="0" step="0.1">
+      <input class="beer-item__input" type="number" v-model.number="beer.size">
+      <input class="beer-item__input" type="number" v-model.number="beer.quantity">
       <input class="beer-item__input" type="date" v-model="beer.date">
       <input type="submit" value="Save beer" @click.prevent="saveBeer">
     </form>
@@ -16,11 +16,11 @@
       <input class="beer-item__input" type="text" v-model="newBeer.name" required>
       <input class="beer-item__input" type="text" v-model="newBeer.style">
       <!-- <input type="number"> to <input type="text" inputmode="numeric" pattern="[0-9]*"> -->
-      <input class="beer-item__input" type="number" v-model="newBeer.abv" min="0" step="0.1">
-      <input class="beer-item__input" type="number" v-model="newBeer.size">
-      <input class="beer-item__input" type="number" v-model="newBeer.quantity">
+      <input class="beer-item__input" type="number" v-model.number="newBeer.abv" min="0" step="0.1">
+      <input class="beer-item__input" type="number" v-model.number="newBeer.size">
+      <input class="beer-item__input" type="number" v-model.number="newBeer.quantity">
       <input class="beer-item__input" type="date" v-model="newBeer.date">
-      <input type="submit" value="Add new beer" @click="addBeer">
+      <input type="submit" value="Add new beer" @click.prevent="addBeer">
     </form>
   </section>
 
@@ -43,10 +43,11 @@ export default {
   methods: {
     saveBeer: function () {
       this.$emit('save-beer')
-      // this.editing = !this.editing
     },
     addBeer: function () {
-      // this.editing = !this.editing
+      console.log('add beer')
+      // this.newBeer = {}
+      this.$emit('add-beer', this.newBeer)
     }
   }
 }

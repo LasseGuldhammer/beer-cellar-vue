@@ -1,5 +1,8 @@
 <template>
-  <beer-list-form></beer-list-form>
+  <section>
+    <button @click="displayForm = !displayForm">Add new beer</button>
+    <beer-list-form v-if="displayForm" @add-beer="addBeer"></beer-list-form>
+  </section>
 </template>
 
 <script>
@@ -12,7 +15,13 @@ export default {
   },
   data () {
     return {
-      beer: {}
+      beer: {},
+      displayForm: false
+    }
+  },
+  methods: {
+    addBeer: function (beer) {
+      this.$emit('add-beer', beer)
     }
   }
 }

@@ -11,8 +11,8 @@
       <p v-if="this.readyToDrink">Ready to drink</p>
       <button @click="edit">Edit beer</button>
     </div>
-    <div class="flex beer-item__editor" v-if="this.editing" @save-beer="edit">
-      <beer-list-form :beer="beer"></beer-list-form>
+    <div class="flex beer-item__editor" v-if="this.editing">
+      <beer-list-form :beer="beer" @save-beer="edit"></beer-list-form>
     </div>
   </div>
 </template>
@@ -59,6 +59,7 @@ export default {
       this.readyToDrink = years >= this.beer.minimumAge
     },
     edit: function () {
+      console.log('toggle edit')
       this.editing = !this.editing
     }
   },
