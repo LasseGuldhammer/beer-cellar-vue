@@ -45,9 +45,8 @@ export default {
       this.$emit('save-beer')
     },
     addBeer: function () {
-      console.log('add beer')
-      // this.newBeer = {}
       this.$emit('add-beer', this.newBeer)
+      this.newBeer = {}
     }
   }
 }

@@ -1,6 +1,21 @@
 <template>
   <div class="beer-list">
-    <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer"></beer-list-item>
+    <table>
+      <thead>
+        <tr>
+          <th>Brewery</th>
+          <th>Name</th>
+          <th>Style</th>
+          <th>Abv</th>
+          <th>Size</th>
+          <th>Quantity</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer"></beer-list-item>
+      </tbody>
+    </table>
     <beer-list-add-new @add-beer="updateBeerList"></beer-list-add-new>
   </div>
 </template>

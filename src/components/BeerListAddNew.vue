@@ -22,6 +22,7 @@ export default {
   methods: {
     addBeer: function (beer) {
       this.$emit('add-beer', beer)
+      this.displayForm = false
     }
   }
 }

@@ -1,29 +1,29 @@
 <template>
-  <div class="flex beer-item">
-    <div class="flex beer-item__content" v-if="!this.editing">
-      <p>{{ beer.brewery }}</p>
-      <p>{{ beer.name }}</p>
-      <p>{{ beer.style }}</p>
-      <p>{{ beer.abv }}%</p>
-      <p>{{ beer.size }} cl</p>
-      <p>Quantity: {{ beer.quantity }}</p>
-      <p>Age: {{ age }}</p>
-      <p v-if="this.readyToDrink">Ready to drink</p>
-      <button @click="edit">Edit beer</button>
+  <tr class="flex beer-item" v-if="!this.editing">
+    <div class="flex beer-item__content">
+      <td>{{ beer.brewery }}</td>
+      <td>{{ beer.name }}</td>
+      <td>{{ beer.style }}</td>
+      <td>{{ beer.abv }}%</td>
+      <td>{{ beer.size }} cl</td>
+      <td>Quantity: {{ beer.quantity }}</td>
+      <td>Age: {{ age }}</td>
+      <td v-if="this.readyToDrink">Ready to drink</td>
+      <td><button @click="edit">Edit beer</button></td>
     </div>
-    <div class="flex beer-item__editor" v-if="this.editing">
-      <beer-list-form :beer="beer" @save-beer="edit"></beer-list-form>
-    </div>
-  </div>
+  </tr>
+  <!-- <div class="flex beer-item__editor" v-if="this.editing">
+    <beer-list-form :beer="beer" @save-beer="edit"></beer-list-form>
+  </div> -->
 </template>
 
 <script>
-import BeerListForm from './BeerListForm.vue'
+// import BeerListForm from './BeerListForm.vue'
 
 export default {
   name: 'BeerListItem',
   components: {
-    BeerListForm
+    // BeerListForm
   },
   props: {
     beer: {
@@ -59,7 +59,6 @@ export default {
       this.readyToDrink = years >= this.beer.minimumAge
     },
     edit: function () {
-      console.log('toggle edit')
       this.editing = !this.editing
     }
   },
@@ -67,7 +66,6 @@ export default {
     beer: {
       deep: true,
       handler (val, oldVal) {
-        // console.log('beer updated')
         this.calculateAge()
       }
     }
@@ -76,7 +74,6 @@ export default {
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 
 .beer-item {
