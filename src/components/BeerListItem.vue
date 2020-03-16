@@ -1,29 +1,29 @@
 <template>
-  <tr class="flex beer-item" v-if="!this.editing">
-    <div class="flex beer-item__content">
-      <td>{{ beer.brewery }}</td>
-      <td>{{ beer.name }}</td>
-      <td>{{ beer.style }}</td>
-      <td>{{ beer.abv }}%</td>
-      <td>{{ beer.size }} cl</td>
-      <td>Quantity: {{ beer.quantity }}</td>
-      <td>Age: {{ age }}</td>
-      <td v-if="this.readyToDrink">Ready to drink</td>
-      <td><button @click="edit">Edit beer</button></td>
+  <div class="beer-item">
+    <div class="beer-item__content flex" v-if="!this.editing">
+      <p class="beer-list__column --brewery text-left">{{ beer.brewery }}</p>
+      <p class="beer-list__column --name text-left">{{ beer.name }}</p>
+      <p class="beer-list__column --style text-left">{{ beer.style }}</p>
+      <p class="beer-list__column --abv text-right">{{ beer.abv }}%</p>
+      <p class="beer-list__column --size text-right">{{ beer.size }} cl</p>
+      <p class="beer-list__column --quantity text-right">{{ beer.quantity }}</p>
+      <p class="beer-list__column --age text-left">{{ age }}</p>
+      <p class="beer-list__column --status text-left" v-if="this.readyToDrink">Ready to drink</p>
+      <p><button @click="edit">Edit beer</button></p>
     </div>
-  </tr>
-  <!-- <div class="flex beer-item__editor" v-if="this.editing">
-    <beer-list-form :beer="beer" @save-beer="edit"></beer-list-form>
-  </div> -->
+    <div class="beer-item__editor" v-if="this.editing">
+      <beer-list-form :beer="beer" @save-beer="edit"></beer-list-form>
+    </div>
+  </div>
 </template>
 
 <script>
-// import BeerListForm from './BeerListForm.vue'
+import BeerListForm from './BeerListForm.vue'
 
 export default {
   name: 'BeerListItem',
   components: {
-    // BeerListForm
+    BeerListForm
   },
   props: {
     beer: {
@@ -83,10 +83,5 @@ export default {
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-// add class, avoid element selectors
-p {
-  padding: 8px;
 }
 </style>

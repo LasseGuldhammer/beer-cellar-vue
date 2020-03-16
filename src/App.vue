@@ -32,4 +32,16 @@ body {
 .flex {
   display: flex;
 }
+
+.grid {
+  display: grid;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
 </style>

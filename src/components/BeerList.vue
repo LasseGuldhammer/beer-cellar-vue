@@ -1,23 +1,18 @@
 <template>
-  <div class="beer-list">
-    <table>
-      <thead>
-        <tr>
-          <th>Brewery</th>
-          <th>Name</th>
-          <th>Style</th>
-          <th>Abv</th>
-          <th>Size</th>
-          <th>Quantity</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer"></beer-list-item>
-      </tbody>
-    </table>
+  <main class="beer-list">
+    <div class="beer-list__header flex">
+      <p class="beer-list__column --brewery text-left">Brewery</p>
+      <p class="beer-list__column --name text-left">Name</p>
+      <p class="beer-list__column --style text-left">Style</p>
+      <p class="beer-list__column --abv text-right">Abv</p>
+      <p class="beer-list__column --size text-right">Size</p>
+      <p class="beer-list__column --quantity text-right">Qty.</p>
+      <p class="beer-list__column --age text-left">Age</p>
+      <p class="beer-list__column --status text-left">Status</p>
+    </div>
+    <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer"></beer-list-item>
     <beer-list-add-new @add-beer="updateBeerList"></beer-list-add-new>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -88,6 +83,47 @@ export default {
   padding: 8px;
   width: 66%;
   max-width: 900px;
+
+  &__column {
+    padding-left: 8px;
+
+    &.--brewery {
+      flex: 0 0 15%;
+    }
+
+    &.--name {
+      flex: 0 0 20%;
+    }
+
+    &.--style {
+      flex: 0 0 15%;
+    }
+
+    &.--abv {
+      flex: 0 0 7.5%;
+    }
+
+    &.--size {
+      flex: 0 0 7.5%;
+    }
+
+    &.--quantity {
+      flex: 0 0 6%;
+    }
+
+    &.--age {
+      flex: 0 0 10%;
+    }
+
+    &.--status {
+      flex: 0 0 10%;
+    }
+  }
+
+  &__header {
+    font-weight: 700;
+    justify-content: flex-start;
+  }
 }
 
 </style>
