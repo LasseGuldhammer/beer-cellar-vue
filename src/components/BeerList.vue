@@ -84,6 +84,20 @@ export default {
   width: 66%;
   max-width: 900px;
 
+  &__beer-item {
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__beer-form {
+    width: 100px;
+  }
+
   &__column {
     padding-left: 8px;
 
@@ -117,6 +131,11 @@ export default {
 
     &.--status {
       flex: 0 0 10%;
+    }
+
+    &.--ageing {
+      color: #c0c0c0;
+      font-style: italic;
     }
   }
 

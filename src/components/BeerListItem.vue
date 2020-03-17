@@ -1,17 +1,18 @@
 <template>
-  <div class="beer-item">
-    <div class="beer-item__content flex" v-if="!this.editing">
+  <div class="beer-list__beer-item">
+    <div class="beer-list__beer-item flex" v-if="!this.editing">
       <p class="beer-list__column --brewery text-left">{{ beer.brewery }}</p>
       <p class="beer-list__column --name text-left">{{ beer.name }}</p>
       <p class="beer-list__column --style text-left">{{ beer.style }}</p>
-      <p class="beer-list__column --abv text-right">{{ beer.abv }}%</p>
+      <p class="beer-list__column --abv text-right">{{ beer.abv }}<small>%</small></p>
       <p class="beer-list__column --size text-right">{{ beer.size }} cl</p>
       <p class="beer-list__column --quantity text-right">{{ beer.quantity }}</p>
-      <p class="beer-list__column --age text-left">{{ age }}</p>
-      <p class="beer-list__column --status text-left" v-if="this.readyToDrink">Ready to drink</p>
+      <!-- <p class="beer-list__column --age text-left">{{ age }}</p> -->
+      <p class="beer-list__column --age text-left"><span v-if="years.length > 0">{{ years}}</span> <span v-if="months.length > 0"><br>{{ months }}</span></p>
+      <p class="beer-list__column --status text-left" :class="{ '--ageing': !readyToDrink }">{{ status }}</p>
       <p><button @click="edit">Edit beer</button></p>
     </div>
-    <div class="beer-item__editor" v-if="this.editing">
+    <div v-if="this.editing">
       <beer-list-form :beer="beer" @save-beer="edit"></beer-list-form>
     </div>
   </div>
@@ -34,9 +35,12 @@ export default {
   data () {
     return {
       age: '',
+      years: '',
+      months: '',
       currentDate: Date.now(),
       editing: false,
-      readyToDrink: false
+      readyToDrink: false,
+      status: 'Ageing'
     }
   },
   created: function () {
@@ -53,10 +57,14 @@ export default {
       var years = Math.floor(totalMonths / 12)
       var months = totalMonths - years * 12
       var yearString = years + (years > 1 ? ' years, ' : ' year, ')
+      this.years = yearString
       var monthString = months + (months > 1 ? ' months' : ' month')
-      // console.log('calculateAge called')
+      this.months = monthString
       this.age = (years > 0 ? yearString : '') + monthString
-      this.readyToDrink = years >= this.beer.minimumAge
+      if (years >= this.beer.minimumAge) {
+        this.readyToDrink = true
+        this.status = 'Ready'
+      }
     },
     edit: function () {
       this.editing = !this.editing
@@ -73,15 +81,3 @@ export default {
 }
 
 </script>
-
-<style lang="scss">
-
-.beer-item {
-  border: 1px solid #e0e0e0;
-  margin-bottom: 8px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-</style>
