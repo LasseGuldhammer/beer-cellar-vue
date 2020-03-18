@@ -84,10 +84,13 @@ export default {
   width: 66%;
   max-width: 900px;
 
-  &__beer-item {
-    align-items: center;
+  &__beer-item-wrapper {
     border: 1px solid #e0e0e0;
     margin-bottom: 8px;
+  }
+
+  &__beer-item {
+    align-items: center;
 
     &:last-child {
       margin-bottom: 0;
@@ -102,11 +105,11 @@ export default {
     padding-left: 8px;
 
     &.--brewery {
-      flex: 0 0 15%;
+      flex: 0 0 17.5%;
     }
 
     &.--name {
-      flex: 0 0 20%;
+      flex: 0 0 22.5%;
     }
 
     &.--style {
@@ -122,7 +125,8 @@ export default {
     }
 
     &.--quantity {
-      flex: 0 0 6%;
+      flex: 0 0 10%;
+      padding-right: 24px;
     }
 
     &.--age {
