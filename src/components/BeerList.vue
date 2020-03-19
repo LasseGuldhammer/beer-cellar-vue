@@ -54,6 +54,18 @@ export default {
         },
         {
           id: 3,
+          brewery: 'Brouwerij Bosteels',
+          name: 'Tripel Karmeliet',
+          style: 'Tripel',
+          abv: 8.4,
+          quantity: 4,
+          size: 33,
+          date: 'August 16, 2019 00:00:00',
+          minimumAge: 3,
+          maximumAge: 0
+        },
+        {
+          id: 4,
           brewery: 'Stigbergets',
           name: 'Amazing Haze',
           style: 'IPA',
@@ -61,6 +73,18 @@ export default {
           quantity: 2,
           size: 44,
           date: 'Januar 04, 2020 00:00:00',
+          minimumAge: 0,
+          maximumAge: 0
+        },
+        {
+          id: 5,
+          brewery: 'To Øl',
+          name: 'Black Malts & Body Salts',
+          style: 'Black DIPA',
+          abv: 9.9,
+          quantity: 3,
+          size: 33,
+          date: 'February 01, 2020 00:00:00',
           minimumAge: 0,
           maximumAge: 0
         }
@@ -98,6 +122,13 @@ export default {
   }
 
   &__beer-form {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+  &__beer-input {
     width: 100px;
   }
 

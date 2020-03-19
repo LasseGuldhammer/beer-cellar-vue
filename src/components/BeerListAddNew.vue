@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="position-relative">
     <button @click="displayForm = !displayForm">Add new beer</button>
     <beer-list-form v-if="displayForm" @add-beer="addBeer"></beer-list-form>
   </section>

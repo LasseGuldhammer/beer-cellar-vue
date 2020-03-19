@@ -1,18 +1,21 @@
 <template>
-  <div class="beer-list__beer-item-wrapper">
-    <div class="beer-list__beer-item flex" v-if="!this.editing">
+  <div class="beer-list__beer-item-wrapper position-relative">
+    <div class="beer-list__beer-item flex" :class="{ 'visibility-hidden': editing }">
       <p class="beer-list__column --brewery text-left">{{ beer.brewery }}</p>
       <p class="beer-list__column --name text-left">{{ beer.name }}</p>
       <p class="beer-list__column --style text-left">{{ beer.style }}</p>
       <p class="beer-list__column --abv text-right">{{ beer.abv }}<small>%</small></p>
       <p class="beer-list__column --size text-right">{{ beer.size }} cl</p>
       <p class="beer-list__column --quantity text-right">{{ beer.quantity }}</p>
-      <!-- <p class="beer-list__column --age text-left">{{ age }}</p> -->
       <p class="beer-list__column --age text-left">
         <span v-if="years !== 0">{{ yearString }}</span>
-        <span v-if="months !== 0">
+        <span v-if="months !== 0 && years !== 0">
           <br>{{ monthString }}
-        </span></p>
+        </span>
+        <span v-else-if="months !== 0">
+          {{ monthString }}
+        </span>
+      </p>
       <p class="beer-list__column --status text-left" :class="{ '--ageing': !ready }">{{ status }}</p>
       <button @click="edit">Edit beer</button>
     </div>

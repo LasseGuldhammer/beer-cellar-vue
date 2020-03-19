@@ -11,6 +11,20 @@ export default {
   name: 'App',
   components: {
     BeerList
+  },
+  data () {
+    return {
+      currentDate: new Date(Date.now()),
+      maxDate: ''
+    }
+  },
+  created: function () {
+    this.getMaxDate()
+  },
+  methods: {
+    getMaxDate: function () {
+      this.maxDate = this.currentDate.getFullYear() + '-' + this.currentDate.getMonth() + '-' + this.currentDate.getDate()
+    }
   }
 }
 </script>
@@ -33,6 +47,18 @@ body {
   background: #f0f0f0;
 }
 
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
 .flex {
   display: flex;
 }
@@ -41,11 +67,23 @@ body {
   display: grid;
 }
 
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}
+
 .text-left {
   text-align: left;
 }
 
 .text-right {
   text-align: right;
+}
+
+.visibility-hidden {
+  visibility: hidden;
 }
 </style>

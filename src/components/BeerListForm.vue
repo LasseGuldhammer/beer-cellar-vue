@@ -1,29 +1,29 @@
+<!-- Alternative to input="number" -->
+<!-- <input type="number"> to <input type="text" inputmode="numeric" pattern="[0-9]*"> -->
+
 <template>
-  <section>
+  <section class="beer-list__beer-form position-absolute">
     <form v-if="beer">
-      <input class="beer-list__beer-form" type="text" v-model="beer.brewery" required>
-      <input class="beer-list__beer-form" type="text" v-model="beer.name" required>
-      <input class="beer-list__beer-form" type="text" v-model="beer.style">
-      <!-- <input type="number"> to <input type="text" inputmode="numeric" pattern="[0-9]*"> -->
-      <input class="beer-list__beer-form" type="number" v-model.number="beer.abv" min="0" step="0.1">
-      <input class="beer-list__beer-form" type="number" v-model.number="beer.size">
-      <input class="beer-list__beer-form" type="number" v-model.number="beer.quantity">
-      <input class="beer-list__beer-form" type="date" v-model="beer.date">
-      <input type="submit" value="Save beer" @click.prevent="saveBeer">
+      <input id="brewery" class="beer-list__beer-input" type="text" placeholder="Brewery" v-model="beer.brewery" required>
+      <input id="name" class="beer-list__beer-input" type="text" placeholder="Name" v-model="beer.name" required>
+      <input id="style" class="beer-list__beer-input" type="text" placeholder="Style" v-model="beer.style" required>
+      <input id="abv" class="beer-list__beer-input" type="number" placeholder="Abv" v-model.number="beer.abv" min="0" max="99" step="0.1">
+      <input id="size" class="beer-list__beer-input" type="number" v-model.number="beer.size" min="0">
+      <input id="quantity" class="beer-list__beer-input" type="number" v-model.number="beer.quantity" min="1">
+      <input id="date" class="beer-list__beer-input" type="date" v-model="beer.date">
+      <button type="submit" @click.prevent="saveBeer">Save beer</button>
     </form>
     <form v-if="!beer">
-      <input class="beer-list__beer-form" type="text" v-model="newBeer.brewery" required>
-      <input class="beer-list__beer-form" type="text" v-model="newBeer.name" required>
-      <input class="beer-list__beer-form" type="text" v-model="newBeer.style">
-      <!-- <input type="number"> to <input type="text" inputmode="numeric" pattern="[0-9]*"> -->
-      <input class="beer-list__beer-form" type="number" v-model.number="newBeer.abv" min="0" step="0.1">
-      <input class="beer-list__beer-form" type="number" v-model.number="newBeer.size">
-      <input class="beer-list__beer-form" type="number" v-model.number="newBeer.quantity">
-      <input class="beer-list__beer-form" type="date" v-model="newBeer.date">
-      <input type="submit" value="Add new beer" @click.prevent="addBeer">
+      <input id="brewery" class="beer-list__beer-input" type="text" placeholder="Brewery" v-model="newBeer.brewery" required>
+      <input id="name" class="beer-list__beer-input" type="text" placeholder="Name" v-model="newBeer.name" required>
+      <input id="style" class="beer-list__beer-input" type="text" placeholder="Style" v-model="newBeer.style" required>
+      <input id="abv" class="beer-list__beer-input" type="number" placeholder="Abv" v-model.number="newBeer.abv" min="0" max="99" step="0.1">
+      <input id="size" class="beer-list__beer-input" type="number" placeholder="Size" v-model.number="newBeer.size" min="0">
+      <input id="quantity" class="beer-list__beer-input" type="number" placeholder="Quantity" v-model.number="newBeer.quantity" min="1">
+      <input id="date" class="beer-list__beer-input" type="date" placeholder="Date" v-model="newBeer.date" :max="this.$root.maxDate">
+      <button type="submit" @click.prevent="addBeer">Add new beer</button>
     </form>
   </section>
-
 </template>
 
 <script>
@@ -37,6 +37,7 @@ export default {
   },
   data () {
     return {
+      maxDate: this.$root.currentDate,
       newBeer: {}
     }
   },
