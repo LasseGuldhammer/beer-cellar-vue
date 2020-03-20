@@ -41,7 +41,6 @@ export default {
   },
   data () {
     return {
-      currentDate: Date.now(),
       editing: false,
       ready: false,
       status: 'Ageing',
@@ -57,10 +56,10 @@ export default {
   methods: {
     calculateAge: function () {
       var date = new Date(this.beer.date)
-      if (date > this.currentDate) {
+      if (date > this.$parent.currentDate) {
         return
       }
-      var totalMonths = Math.floor((this.currentDate - date) / 2627942400)
+      var totalMonths = Math.floor((this.$parent.currentDate - date) / 2627942400)
       this.years = Math.floor(totalMonths / 12)
       this.months = Math.floor(totalMonths % 12)
       this.yearString = this.years + (this.years > 1 ? ' years' : ' year')

@@ -89,7 +89,7 @@ export default {
           maximumAge: 0
         }
       ],
-      maxDate: this.$root.maxDate
+      currentDate: Date.now()
     }
   },
   methods: {
@@ -131,6 +131,14 @@ export default {
 
   &__beer-input {
     width: 100px;
+
+    /* &:valid {
+      outline: 1px solid green;
+    } */
+
+    /* &:invalid {
+      outline: 1px solid red;
+    } */
   }
 
   &__column {
