@@ -11,20 +11,6 @@ export default {
   name: 'App',
   components: {
     BeerList
-  },
-  data () {
-    return {
-      currentDate: new Date(Date.now()),
-      maxDate: ''
-    }
-  },
-  created: function () {
-    this.getMaxDate()
-  },
-  methods: {
-    getMaxDate: function () {
-      this.maxDate = this.currentDate.getFullYear() + '-' + this.currentDate.getMonth() + '-' + this.currentDate.getDate()
-    }
   }
 }
 </script>

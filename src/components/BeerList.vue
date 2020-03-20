@@ -88,7 +88,8 @@ export default {
           minimumAge: 0,
           maximumAge: 0
         }
-      ]
+      ],
+      maxDate: this.$root.maxDate
     }
   },
   methods: {
