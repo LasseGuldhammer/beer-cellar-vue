@@ -53,11 +53,11 @@ body {
   display: grid;
 }
 
-.position-absolute {
+.absolute {
   position: absolute;
 }
 
-.position-relative {
+.relative {
   position: relative;
 }
 

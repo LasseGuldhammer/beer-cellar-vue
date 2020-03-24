@@ -1,5 +1,5 @@
 <template>
-  <div class="beer-list__beer-item-wrapper position-relative">
+  <div class="beer-list__beer-item-wrapper relative">
     <div class="beer-list__beer-item flex" :class="{ 'visibility-hidden': editing }">
       <p class="beer-list__column --brewery text-left">{{ beer.brewery }}</p>
       <p class="beer-list__column --name text-left">{{ beer.name }}</p>
@@ -20,7 +20,7 @@
       <button @click="edit">Edit beer</button>
     </div>
     <div v-if="this.editing">
-      <beer-list-form :beer="beer" @save-beer="edit"></beer-list-form>
+      <beer-list-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-list-form>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
-  <section class="position-relative">
+  <section class="relative">
     <button @click="displayForm = !displayForm">Add new beer</button>
-    <beer-list-form v-if="displayForm" @add-beer="addBeer"></beer-list-form>
+    <beer-list-form v-if="displayForm" @add-beer="addBeer" @save-beer="saveBeer" mode="addNewBeer"></beer-list-form>
   </section>
 </template>
 
@@ -23,6 +23,9 @@ export default {
     addBeer: function (beer) {
       this.$emit('add-beer', beer)
       this.displayForm = false
+    },
+    saveBeer: function (beer) {
+      this.$emit('save-beer', beer)
     }
   }
 }
