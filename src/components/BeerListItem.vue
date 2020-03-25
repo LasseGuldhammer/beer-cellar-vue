@@ -69,7 +69,11 @@ export default {
         this.status = 'Ready'
       }
     },
-    edit: function () {
+    edit: function (beer) {
+      // console.log(beer)
+      if (this.editing) {
+        this.$emit('save-beer', beer)
+      }
       this.editing = !this.editing
     }
   },

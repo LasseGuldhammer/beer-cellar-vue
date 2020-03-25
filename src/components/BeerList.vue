@@ -10,8 +10,8 @@
       <p class="beer-list__column --age text-left">Age</p>
       <p class="beer-list__column --status text-left">Status</p>
     </div>
-    <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer"></beer-list-item>
-    <beer-list-add-new @add-beer="updateBeerList"></beer-list-add-new>
+    <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer" @save-beer="updateBeer"></beer-list-item>
+    <beer-list-add-new @add-beer="addNewBeer"></beer-list-add-new>
   </main>
 </template>
 
@@ -93,8 +93,13 @@ export default {
     }
   },
   methods: {
-    updateBeerList: function (beer) {
+    addNewBeer: function (beer) {
+      beer.id = this.beers.length + 1
       this.beers.push(beer)
+    },
+    updateBeer: function (beer) {
+      console.log(beer)
+      this.beers[beer.id - 1] = beer
     }
   }
 }

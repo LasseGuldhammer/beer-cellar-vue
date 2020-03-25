@@ -68,8 +68,9 @@ export default {
     },
     saveBeer: function () {
       if (this.validate()) {
-        this.beer = JSON.parse(JSON.stringify(this.newBeer))
-        this.$emit('save-beer', this.newBeer)
+        var beer = JSON.parse(JSON.stringify(this.newBeer))
+        // console.log(beer)
+        this.$emit('save-beer', beer)
       }
     },
     addBeer: function () {
