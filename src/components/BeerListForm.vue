@@ -4,7 +4,7 @@
 <template>
   <section class="beer-list__beer-form absolute">
     <form id="beer-form" ref="beerForm">
-      <input id="brewery" ref="brewery" class="beer-list__beer-input" type="text" placeholder="Brewery" v-model="newBeer.brewery" required>
+      <input id="brewery" ref="brewery" class="beer-list__beer-input" type="text" placeholder="Brewery" v-model="newBeer.brewery" @input="checkValidity" @invalid="reportError" required>
       <input id="name" ref="name" class="beer-list__beer-input" type="text" placeholder="Name" v-model="newBeer.name" required>
       <input id="style" ref="style" class="beer-list__beer-input" type="text" placeholder="Style" v-model="newBeer.style" required>
       <input id="abv" ref="abv" class="beer-list__beer-input" type="number" placeholder="Abv" v-model.number="newBeer.abv" min="0" max="99" step="0.1" required>
@@ -57,11 +57,19 @@ export default {
     }
   },
   methods: {
+    checkValidity: function (e) {
+      console.log(e)
+    },
+    reportError: function (e) {
+
+    },
     validate: function () {
       var refs = this.$refs
       if (!refs.beerForm.checkValidity()) {
-        if (refs.brewery.checkValidity()) {
+        if (!refs.brewery.checkValidity()) {
           refs.brewery.setCustomValidity('Please enter a name for the brewery')
+        } else {
+          refs.brewery.setCustomValidity('')
         }
       }
       return refs.beerForm.checkValidity()
@@ -74,8 +82,10 @@ export default {
       }
     },
     addBeer: function () {
-      this.$emit('add-beer', this.newBeer)
-      this.newBeer = {}
+      if (this.validate()) {
+        this.$emit('add-beer', this.newBeer)
+        this.newBeer = {}
+      }
     }
   }
 }

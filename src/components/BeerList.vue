@@ -10,12 +10,13 @@
       <p class="beer-list__column --age text-left">Age</p>
       <p class="beer-list__column --status text-left">Status</p>
     </div>
-    <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer" @save-beer="updateBeer"></beer-list-item>
+    <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
     <beer-list-add-new @add-beer="addNewBeer"></beer-list-add-new>
   </main>
 </template>
 
 <script>
+import Vue from 'vue'
 import BeerListItem from './BeerListItem.vue'
 import BeerListAddNew from './BeerListAddNew.vue'
 
@@ -36,7 +37,7 @@ export default {
           abv: 12,
           quantity: 8,
           size: 33,
-          date: 'December 11, 2017 00:00:00',
+          date: '2017-12-11',
           minimumAge: 3,
           maximumAge: 0
         },
@@ -48,7 +49,7 @@ export default {
           abv: 6.7,
           quantity: 9,
           size: 33,
-          date: 'October 20, 2018 00:00:00',
+          date: '2018-10-20',
           minimumAge: 1,
           maximumAge: 0
         },
@@ -60,7 +61,7 @@ export default {
           abv: 8.4,
           quantity: 4,
           size: 33,
-          date: 'August 16, 2019 00:00:00',
+          date: '2019-08-16',
           minimumAge: 3,
           maximumAge: 0
         },
@@ -72,7 +73,7 @@ export default {
           abv: 6.4,
           quantity: 2,
           size: 44,
-          date: 'Januar 04, 2020 00:00:00',
+          date: '2020-01-04',
           minimumAge: 0,
           maximumAge: 0
         },
@@ -84,7 +85,7 @@ export default {
           abv: 9.9,
           quantity: 3,
           size: 33,
-          date: 'February 01, 2020 00:00:00',
+          date: '2020-02-01',
           minimumAge: 0,
           maximumAge: 0
         }
@@ -97,9 +98,8 @@ export default {
       beer.id = this.beers.length + 1
       this.beers.push(beer)
     },
-    updateBeer: function (beer) {
-      console.log(beer)
-      this.beers[beer.id - 1] = beer
+    saveBeer: function (beer) {
+      Vue.set(this.beers, beer.id - 1, beer)
     }
   }
 }
