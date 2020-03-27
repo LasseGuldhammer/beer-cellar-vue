@@ -57,6 +57,10 @@ body {
   position: absolute;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .relative {
   position: relative;
 }

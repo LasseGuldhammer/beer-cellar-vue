@@ -1,16 +1,21 @@
 <template>
   <main class="beer-list">
     <div class="beer-list__header flex">
-      <p class="beer-list__column --brewery text-left">Brewery</p>
-      <p class="beer-list__column --name text-left">Name</p>
-      <p class="beer-list__column --style text-left">Style</p>
-      <p class="beer-list__column --abv text-right">Abv</p>
-      <p class="beer-list__column --size text-right">Size</p>
-      <p class="beer-list__column --quantity text-right">Qty.</p>
-      <p class="beer-list__column --age text-left">Age</p>
-      <p class="beer-list__column --status text-left">Status</p>
+      <p class="beer-list__column --brewery pointer text-left" @click="sortBeers('brewery')">Brewery</p>
+      <p class="beer-list__column --name pointer text-left" @click="sortBeers('name')">Name</p>
+      <p class="beer-list__column --style pointer text-left">Style</p>
+      <p class="beer-list__column --abv pointer text-right">Abv</p>
+      <p class="beer-list__column --size pointer text-right">Size</p>
+      <p class="beer-list__column --quantity pointer text-right">Qty.</p>
+      <p class="beer-list__column --age pointer text-left">Age</p>
+      <p class="beer-list__column --status pointer text-left">Status</p>
     </div>
-    <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
+    <div v-if="!isSorted">
+      <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
+    </div>
+    <div v-if="isSorted">
+      <beer-list-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
+    </div>
     <beer-list-add-new @add-beer="addNewBeer"></beer-list-add-new>
   </main>
 </template>
@@ -90,7 +95,10 @@ export default {
           maximumAge: 0
         }
       ],
-      currentDate: Date.now()
+      currentDate: Date.now(),
+      isSorted: false,
+      sortedBy: '',
+      sortedBeers: []
     }
   },
   methods: {
@@ -100,6 +108,19 @@ export default {
     },
     saveBeer: function (beer) {
       Vue.set(this.beers, beer.id - 1, beer)
+    },
+    sortBeers: function (param) {
+      if (param !== this.sortedBy) {
+        var sortedList = this.beers
+        sortedList.sort(function (a, b) {
+          return (a.param > b.param) ? 1 : -1
+        })
+        this.sortedBy = param
+        this.sortedBeers = sortedList
+      } else {
+        this.sortedBeers = this.sortedBeers.reverse()
+      }
+      this.isSorted = true
     }
   }
 }

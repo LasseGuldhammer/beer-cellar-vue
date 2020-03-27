@@ -55,6 +55,11 @@ export default {
   },
   methods: {
     calculateAge: function () {
+      if (this.beer.date === undefined || this.beer.date === '') {
+        this.months = 0
+        this.years = 0
+        return
+      }
       var date = new Date(this.beer.date)
       if (date > this.$parent.currentDate) {
         return
@@ -70,7 +75,6 @@ export default {
       }
     },
     edit: function (beer) {
-      // console.log(beer)
       if (this.editing) {
         this.$emit('save-beer', beer)
       }
