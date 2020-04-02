@@ -3,19 +3,14 @@
     <div class="beer-list__header flex">
       <p class="beer-list__column --brewery pointer text-left" @click="sortBeers('brewery')">Brewery</p>
       <p class="beer-list__column --name pointer text-left" @click="sortBeers('name')">Name</p>
-      <p class="beer-list__column --style pointer text-left">Style</p>
-      <p class="beer-list__column --abv pointer text-right">Abv</p>
-      <p class="beer-list__column --size pointer text-right">Size</p>
-      <p class="beer-list__column --quantity pointer text-right">Qty.</p>
-      <p class="beer-list__column --age pointer text-left">Age</p>
+      <p class="beer-list__column --style pointer text-left" @click="sortBeers('style')">Style</p>
+      <p class="beer-list__column --abv pointer text-right" @click="sortBeers('abv')">Abv</p>
+      <p class="beer-list__column --size pointer text-right" @click="sortBeers('size')">Size</p>
+      <p class="beer-list__column --quantity pointer text-right" @click="sortBeers('quantity')">Qty.</p>
+      <p class="beer-list__column --age pointer text-left" @click="sortBeers('date')">Age</p>
       <p class="beer-list__column --status pointer text-left">Status</p>
     </div>
-    <div v-if="!isSorted">
-      <beer-list-item v-for="beer in beers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
-    </div>
-    <div v-if="isSorted">
-      <beer-list-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
-    </div>
+    <beer-list-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
     <beer-list-add-new @add-beer="addNewBeer"></beer-list-add-new>
   </main>
 </template>
@@ -41,7 +36,7 @@ export default {
           style: 'Imperial stout',
           abv: 12,
           quantity: 8,
-          size: 33,
+          size: 47,
           date: '2017-12-11',
           minimumAge: 3,
           maximumAge: 0
@@ -65,7 +60,7 @@ export default {
           style: 'Tripel',
           abv: 8.4,
           quantity: 4,
-          size: 33,
+          size: 75,
           date: '2019-08-16',
           minimumAge: 3,
           maximumAge: 0
@@ -96,7 +91,6 @@ export default {
         }
       ],
       currentDate: Date.now(),
-      isSorted: false,
       sortedBy: '',
       sortedBeers: []
     }
@@ -113,15 +107,17 @@ export default {
       if (param !== this.sortedBy) {
         var sortedList = this.beers
         sortedList.sort(function (a, b) {
-          return (a.param > b.param) ? 1 : -1
+          return (a[param] > b[param]) ? 1 : -1
         })
         this.sortedBy = param
         this.sortedBeers = sortedList
       } else {
         this.sortedBeers = this.sortedBeers.reverse()
       }
-      this.isSorted = true
     }
+  },
+  created: function () {
+    this.sortBeers('brewery')
   }
 }
 </script>
