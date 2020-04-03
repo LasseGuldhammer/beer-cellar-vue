@@ -16,7 +16,7 @@
           {{ monthString }}
         </span>
       </p>
-      <p class="beer-list__column --status text-left" :class="{ '--ageing': !ready }">{{ status }}</p>
+      <p class="beer-list__column --status text-left" :class="{ '--ageing': !ready }">{{ beer.status }}</p>
       <button @click="edit">Edit beer</button>
     </div>
     <div v-if="this.editing">
@@ -43,7 +43,6 @@ export default {
     return {
       editing: false,
       ready: false,
-      status: 'Ageing',
       months: 0,
       monthString: '',
       years: 0,
@@ -71,7 +70,7 @@ export default {
       this.monthString = this.months + (this.months > 1 ? ' months' : ' month')
       if (this.years >= this.beer.minimumAge) {
         this.ready = true
-        this.status = 'Ready'
+        this.beer.status = 'Ready'
       }
     },
     edit: function (beer) {

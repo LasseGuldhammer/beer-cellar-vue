@@ -8,7 +8,7 @@
       <p class="beer-list__column --size pointer text-right" @click="sortBeers('size')">Size</p>
       <p class="beer-list__column --quantity pointer text-right" @click="sortBeers('quantity')">Qty.</p>
       <p class="beer-list__column --age pointer text-left" @click="sortBeers('date')">Age</p>
-      <p class="beer-list__column --status pointer text-left">Status</p>
+      <p class="beer-list__column --status pointer text-left" @click="sortBeers('status')">Status</p>
     </div>
     <beer-list-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
     <beer-list-add-new @add-beer="addNewBeer"></beer-list-add-new>
@@ -39,7 +39,8 @@ export default {
           size: 47,
           date: '2017-12-11',
           minimumAge: 3,
-          maximumAge: 0
+          maximumAge: 0,
+          status: 'Ageing'
         },
         {
           id: 2,
@@ -51,7 +52,8 @@ export default {
           size: 33,
           date: '2018-10-20',
           minimumAge: 1,
-          maximumAge: 0
+          maximumAge: 0,
+          status: 'Ageing'
         },
         {
           id: 3,
@@ -63,7 +65,8 @@ export default {
           size: 75,
           date: '2019-08-16',
           minimumAge: 3,
-          maximumAge: 0
+          maximumAge: 0,
+          status: 'Ageing'
         },
         {
           id: 4,
@@ -75,7 +78,8 @@ export default {
           size: 44,
           date: '2020-01-04',
           minimumAge: 0,
-          maximumAge: 0
+          maximumAge: 0,
+          status: 'Ageing'
         },
         {
           id: 5,
@@ -87,7 +91,8 @@ export default {
           size: 33,
           date: '2020-02-01',
           minimumAge: 0,
-          maximumAge: 0
+          maximumAge: 0,
+          status: 'Ageing'
         }
       ],
       currentDate: Date.now(),
@@ -128,8 +133,8 @@ export default {
   box-shadow: 5px 5px 10px #dfdfdf, -5px -5px 10px #ffffff;
   margin: 0 auto;
   padding: 8px;
-  width: 66%;
-  max-width: 900px;
+  width: 100%;
+  max-width: none;
 
   &__beer-item-wrapper {
     border: 1px solid #e0e0e0;
