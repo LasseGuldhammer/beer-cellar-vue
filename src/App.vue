@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -26,7 +27,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 body {
@@ -71,6 +71,10 @@ body {
 
 .text-right {
   text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }
 
 .visibility-hidden {

@@ -1,5 +1,6 @@
 <template>
   <main class="beer-list">
+    <h1 class="text-uppercase">Beer Cellar</h1>
     <div class="beer-list__header flex">
       <p class="beer-list__column --brewery pointer text-left" @click="sortBeers('brewery')">Brewery</p>
       <p class="beer-list__column --name pointer text-left" @click="sortBeers('name')">Name</p>
@@ -129,6 +130,11 @@ export default {
 
 <style lang="scss">
 
+$small: 480;
+$medium: 768;
+$large: 992;
+$xlarge: 1200;
+
 .beer-list {
   box-shadow: 5px 5px 10px #dfdfdf, -5px -5px 10px #ffffff;
   margin: 0 auto;
@@ -143,6 +149,8 @@ export default {
 
   &__beer-item {
     align-items: center;
+    min-height: 40px;
+    padding: 8px 0;
 
     &:last-child {
       margin-bottom: 0;
@@ -172,41 +180,66 @@ export default {
     padding-left: 8px;
 
     &.--brewery {
-      flex: 0 0 17.5%;
+      flex: 0 0 31%;
+
+      @media (min-width: $medium) {
+        flex: 0 0 17.5%;
+      }
     }
 
     &.--name {
-      flex: 0 0 22.5%;
+      flex: 0 0 43%;
+
+      @media (min-width: $medium) {
+        flex: 0 0 22.5%;
+      }
     }
 
     &.--style {
-      flex: 0 0 15%;
+      flex: 0 0 26%;
+
+      @media (min-width: $medium) {
+        flex: 0 0 15%;
+      }
     }
 
     &.--abv {
       flex: 0 0 7.5%;
+      display: none;
     }
 
     &.--size {
       flex: 0 0 7.5%;
+      display: none;
     }
 
     &.--quantity {
       flex: 0 0 10%;
       padding-right: 24px;
+      display: none;
     }
 
     &.--age {
       flex: 0 0 10%;
+      display: none;
     }
 
     &.--status {
       flex: 0 0 10%;
+      display: none;
     }
 
     &.--ageing {
       color: #c0c0c0;
       font-style: italic;
+    }
+  }
+
+  &__edit-button {
+    display: none;
+
+    @media (min-width: $medium) {
+      display: block;
     }
   }
 

@@ -1,13 +1,13 @@
 <template>
   <div class="beer-list__beer-item-wrapper relative">
     <div class="beer-list__beer-item flex" :class="{ 'visibility-hidden': editing }">
-      <p class="beer-list__column --brewery text-left">{{ beer.brewery }}</p>
-      <p class="beer-list__column --name text-left">{{ beer.name }}</p>
-      <p class="beer-list__column --style text-left">{{ beer.style }}</p>
-      <p class="beer-list__column --abv text-right">{{ beer.abv }}<small>%</small></p>
-      <p class="beer-list__column --size text-right">{{ beer.size }} cl</p>
-      <p class="beer-list__column --quantity text-right">{{ beer.quantity }}</p>
-      <p class="beer-list__column --age text-left">
+      <span class="beer-list__column --brewery text-left">{{ beer.brewery }}</span>
+      <span class="beer-list__column --name text-left">{{ beer.name }}</span>
+      <span class="beer-list__column --style text-left">{{ beer.style }}</span>
+      <span class="beer-list__column --abv text-right">{{ beer.abv }}<small>%</small></span>
+      <span class="beer-list__column --size text-right">{{ beer.size }} cl</span>
+      <span class="beer-list__column --quantity text-right">{{ beer.quantity }}</span>
+      <span class="beer-list__column --age text-left">
         <span v-if="years !== 0">{{ yearString }}</span>
         <span v-if="months !== 0 && years !== 0">
           <br>{{ monthString }}
@@ -15,9 +15,9 @@
         <span v-else-if="months !== 0">
           {{ monthString }}
         </span>
-      </p>
-      <p class="beer-list__column --status text-left" :class="{ '--ageing': !ready }">{{ beer.status }}</p>
-      <button @click="edit">Edit beer</button>
+      </span>
+      <span class="beer-list__column --status text-left" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
+      <button class="beer-list__edit-button" @click="edit">Edit beer</button>
     </div>
     <div v-if="this.editing">
       <beer-list-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-list-form>
