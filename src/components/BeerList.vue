@@ -130,10 +130,10 @@ export default {
 
 <style lang="scss">
 
-$small: 480;
-$medium: 768;
-$large: 992;
-$xlarge: 1200;
+$small: 480px;
+$medium: 768px;
+$large: 992px;
+$xlarge: 1200px;
 
 .beer-list {
   box-shadow: 5px 5px 10px #dfdfdf, -5px -5px 10px #ffffff;
@@ -154,6 +154,14 @@ $xlarge: 1200;
 
     &:last-child {
       margin-bottom: 0;
+    }
+
+    &.expanded {
+      flex-wrap: wrap;
+
+      & .beer-list__column {
+        display: inline;
+      }
     }
   }
 
@@ -181,6 +189,7 @@ $xlarge: 1200;
 
     &.--brewery {
       flex: 0 0 31%;
+      text-align: left;
 
       @media (min-width: $medium) {
         flex: 0 0 17.5%;
@@ -189,6 +198,7 @@ $xlarge: 1200;
 
     &.--name {
       flex: 0 0 43%;
+      text-align: left;
 
       @media (min-width: $medium) {
         flex: 0 0 22.5%;
@@ -197,6 +207,7 @@ $xlarge: 1200;
 
     &.--style {
       flex: 0 0 26%;
+      text-align: left;
 
       @media (min-width: $medium) {
         flex: 0 0 15%;
@@ -204,29 +215,62 @@ $xlarge: 1200;
     }
 
     &.--abv {
-      flex: 0 0 7.5%;
+      flex: 0 0 15%;
       display: none;
+      text-align: left;
+
+      @media (min-width: $medium) {
+        display: inline;
+        flex: 0 0 7.5%;
+        text-align: right;
+      }
     }
 
     &.--size {
-      flex: 0 0 7.5%;
+      flex: 0 0 15%;
       display: none;
+      text-align: left;
+
+      @media (min-width: $medium) {
+        display: inline;
+        flex: 0 0 7.5%;
+        text-align: right;
+      }
     }
 
     &.--quantity {
-      flex: 0 0 10%;
+      flex: 0 0 15%;
       padding-right: 24px;
       display: none;
+      text-align: left;
+
+      @media (min-width: $medium) {
+        display: inline;
+        flex: 0 0 10%;
+        text-align: right;
+      }
     }
 
     &.--age {
-      flex: 0 0 10%;
+      flex: 0 0 30%;
       display: none;
+      text-align: left;
+
+      @media (min-width: $medium) {
+        display: inline;
+        flex: 0 0 10%;
+      }
     }
 
     &.--status {
-      flex: 0 0 10%;
+      flex: 0 0 25%;
       display: none;
+      text-align: left;
+
+      @media (min-width: $medium) {
+        display: inline;
+        flex: 0 0 10%;
+      }
     }
 
     &.--ageing {
@@ -235,7 +279,7 @@ $xlarge: 1200;
     }
   }
 
-  &__edit-button {
+  &__beer-item-edit {
     display: none;
 
     @media (min-width: $medium) {

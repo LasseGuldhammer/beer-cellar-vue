@@ -1,13 +1,13 @@
 <template>
   <div class="beer-list__beer-item-wrapper relative">
-    <div class="beer-list__beer-item flex" :class="{ 'visibility-hidden': editing }">
-      <span class="beer-list__column --brewery text-left">{{ beer.brewery }}</span>
-      <span class="beer-list__column --name text-left">{{ beer.name }}</span>
-      <span class="beer-list__column --style text-left">{{ beer.style }}</span>
-      <span class="beer-list__column --abv text-right">{{ beer.abv }}<small>%</small></span>
-      <span class="beer-list__column --size text-right">{{ beer.size }} cl</span>
-      <span class="beer-list__column --quantity text-right">{{ beer.quantity }}</span>
-      <span class="beer-list__column --age text-left">
+    <div class="beer-list__beer-item flex" :class="{ 'visibility-hidden': editing, 'expanded': expanded }" @click="expandItem">
+      <span class="beer-list__column --brewery">{{ beer.brewery }}</span>
+      <span class="beer-list__column --name">{{ beer.name }}</span>
+      <span class="beer-list__column --style">{{ beer.style }}</span>
+      <span class="beer-list__column --abv">{{ beer.abv }}<small>%</small></span>
+      <span class="beer-list__column --size">{{ beer.size }} cl</span>
+      <span class="beer-list__column --quantity">{{ beer.quantity }}</span>
+      <span class="beer-list__column --age">
         <span v-if="years !== 0">{{ yearString }}</span>
         <span v-if="months !== 0 && years !== 0">
           <br>{{ monthString }}
@@ -16,8 +16,8 @@
           {{ monthString }}
         </span>
       </span>
-      <span class="beer-list__column --status text-left" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
-      <button class="beer-list__edit-button" @click="edit">Edit beer</button>
+      <span class="beer-list__column --status" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
+      <button class="beer-list__beer-item-edit" @click="edit">Edit beer</button>
     </div>
     <div v-if="this.editing">
       <beer-list-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-list-form>
@@ -42,6 +42,7 @@ export default {
   data () {
     return {
       editing: false,
+      expanded: false,
       ready: false,
       months: 0,
       monthString: '',
@@ -78,6 +79,9 @@ export default {
         this.$emit('save-beer', beer)
       }
       this.editing = !this.editing
+    },
+    expandItem: function () {
+      this.expanded = !this.expanded
     }
   },
   watch: {
