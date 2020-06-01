@@ -31,6 +31,7 @@ export default {
 
 body {
   background: #f0f0f0;
+  font-size: 14px;
 }
 
 .block {
@@ -47,6 +48,10 @@ body {
 
 .flex {
   display: flex;
+
+  &.--column {
+    flex-direction: column;
+  }
 }
 
 .grid {

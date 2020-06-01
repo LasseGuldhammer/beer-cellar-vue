@@ -143,12 +143,14 @@ $xlarge: 1200px;
   max-width: none;
 
   &__beer-item-wrapper {
+    background: #ffffff;
     border: 1px solid #e0e0e0;
+    border-radius: 4px;
     margin-bottom: 8px;
   }
 
   &__beer-item {
-    align-items: center;
+    align-items: start;
     min-height: 40px;
     padding: 8px 0;
 
@@ -198,6 +200,8 @@ $xlarge: 1200px;
 
     &.--name {
       flex: 0 0 43%;
+      font-weight: bold;
+      margin-bottom: 4px;
       text-align: left;
 
       @media (min-width: $medium) {
