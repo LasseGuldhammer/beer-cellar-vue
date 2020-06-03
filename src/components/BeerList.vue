@@ -153,6 +153,7 @@ $xlarge: 1200px;
     align-items: start;
     min-height: 40px;
     padding: 8px 0;
+    width: 50%;
 
     &:last-child {
       margin-bottom: 0;

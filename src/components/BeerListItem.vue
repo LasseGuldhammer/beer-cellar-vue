@@ -1,10 +1,33 @@
 <template>
-  <div class="beer-list__beer-item-wrapper relative">
+  <div class="beer-list__beer-item-wrapper flex relative">
     <div class="beer-list__beer-item flex --column" :class="{ 'visibility-hidden': editing, 'expanded': expanded }" @click="expandItem">
 
       <span class="beer-list__column --name">{{ beer.name }}</span>
       <span class="beer-list__column --brewery">{{ beer.brewery }}</span>
       <span class="beer-list__column --style">{{ beer.style }}</span>
+
+      <!-- <span class="beer-list__column --brewery">{{ beer.brewery }}</span>
+      <span class="beer-list__column --name">{{ beer.name }}</span>
+      <span class="beer-list__column --style">{{ beer.style }}</span>
+      <span class="beer-list__column --abv">{{ beer.abv }}<small>%</small></span>
+      <span class="beer-list__column --size">{{ beer.size }} cl</span>
+      <span class="beer-list__column --quantity">{{ beer.quantity }}</span>
+      <span class="beer-list__column --age">
+        <span v-if="years !== 0">{{ yearString }}</span>
+        <span v-if="months !== 0 && years !== 0">
+          <br>{{ monthString }}
+        </span>
+        <span v-else-if="months !== 0">
+          {{ monthString }}
+        </span>
+      </span>
+      <span class="beer-list__column --status" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
+      <button class="beer-list__beer-item-edit" @click="edit">Edit beer</button> -->
+
+    </div>
+
+    <div class="beer-list__beer-item flex --column" :class="{ 'visibility-hidden': editing, 'expanded': expanded }" @click="expandItem">
+
       <span class="beer-list__column --abv">{{ beer.abv }}<small>%</small></span>
       <span class="beer-list__column --size">{{ beer.size }} cl</span>
       <span class="beer-list__column --quantity">{{ beer.quantity }}</span>
