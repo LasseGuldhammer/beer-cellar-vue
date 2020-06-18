@@ -1,31 +1,35 @@
 <template>
-  <main class="beer-list">
-    <h1 class="text-uppercase">Beer Cellar</h1>
-    <div class="beer-list__header flex">
-      <p class="beer-list__column --brewery pointer text-left" @click="sortBeers('brewery')">Brewery</p>
-      <p class="beer-list__column --name pointer text-left" @click="sortBeers('name')">Name</p>
-      <p class="beer-list__column --style pointer text-left" @click="sortBeers('style')">Style</p>
-      <p class="beer-list__column --abv pointer text-right" @click="sortBeers('abv')">Abv</p>
-      <p class="beer-list__column --size pointer text-right" @click="sortBeers('size')">Size</p>
-      <p class="beer-list__column --quantity pointer text-right" @click="sortBeers('quantity')">Qty.</p>
-      <p class="beer-list__column --age pointer text-left" @click="sortBeers('date')">Age</p>
-      <p class="beer-list__column --status pointer text-left" @click="sortBeers('status')">Status</p>
-    </div>
-    <beer-list-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-list-item>
-    <beer-list-add-new @add-beer="addNewBeer"></beer-list-add-new>
+  <main class="">
+    <header class="beer-cellar-header">
+      <span>Beer Cellar</span>
+    </header>
+
+    <!-- <div class="beer-cellar__header flex">
+      <p class="beer-cellar__column --brewery pointer text-left" @click="sortBeers('brewery')">Brewery</p>
+      <p class="beer-cellar__column --name pointer text-left" @click="sortBeers('name')">Name</p>
+      <p class="beer-cellar__column --style pointer text-left" @click="sortBeers('style')">Style</p>
+      <p class="beer-cellar__column --abv pointer text-right" @click="sortBeers('abv')">Abv</p>
+      <p class="beer-cellar__column --size pointer text-right" @click="sortBeers('size')">Size</p>
+      <p class="beer-cellar__column --quantity pointer text-right" @click="sortBeers('quantity')">Qty.</p>
+      <p class="beer-cellar__column --age pointer text-left" @click="sortBeers('date')">Age</p>
+      <p class="beer-cellar__column --status pointer text-left" @click="sortBeers('status')">Status</p>
+    </div> -->
+
+    <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-cellar-item>
+    <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
   </main>
 </template>
 
 <script>
 import Vue from 'vue'
-import BeerListItem from './BeerListItem.vue'
-import BeerListAddNew from './BeerListAddNew.vue'
+import BeerCellarItem from './BeerCellarItem.vue'
+import BeerCellarAddNew from './BeerCellarAddNew.vue'
 
 export default {
-  name: 'BeerList',
+  name: 'BeerCellar',
   components: {
-    BeerListAddNew,
-    BeerListItem
+    BeerCellarAddNew,
+    BeerCellarItem
   },
   data () {
     return {
@@ -135,7 +139,13 @@ $medium: 768px;
 $large: 992px;
 $xlarge: 1200px;
 
-.beer-list {
+.beer-cellar-header {
+  background: #ffffff;
+  height: 84px;
+  width: 100%;
+}
+
+.beer-cellar {
   box-shadow: 5px 5px 10px #dfdfdf, -5px -5px 10px #ffffff;
   margin: 0 auto;
   padding: 8px;
@@ -162,7 +172,7 @@ $xlarge: 1200px;
     &.expanded {
       flex-wrap: wrap;
 
-      & .beer-list__column {
+      & .beer-cellar__column {
         display: inline;
       }
     }

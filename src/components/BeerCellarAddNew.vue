@@ -1,17 +1,17 @@
 <template>
   <section class="relative">
     <button @click="displayForm = !displayForm">Add new beer</button>
-    <beer-list-form v-if="displayForm" @add-beer="addBeer" @save-beer="saveBeer" mode="addNewBeer"></beer-list-form>
+    <beer-cellar-form v-if="displayForm" @add-beer="addBeer" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>
   </section>
 </template>
 
 <script>
-import BeerListForm from './BeerListForm.vue'
+import BeerCellarForm from './BeerCellarForm.vue'
 
 export default {
-  name: 'BeerListAddNew',
+  name: 'BeerCellarAddNew',
   components: {
-    BeerListForm
+    BeerCellarForm
   },
   data () {
     return {

@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <beer-list></beer-list>
+    <beer-cellar></beer-cellar>
   </div>
 </template>
 
 <script>
-import BeerList from './components/BeerList'
+import BeerCellar from './components/BeerCellar'
 
 export default {
   name: 'App',
   components: {
-    BeerList
+    BeerCellar
   }
 }
 </script>
 
 <style lang="scss">
+
+@import url("/css/normalize.css");
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -32,6 +34,7 @@ export default {
 body {
   background: #f0f0f0;
   font-size: 14px;
+  // margin: 0;
 }
 
 .block {
