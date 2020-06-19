@@ -1,7 +1,16 @@
 <template>
   <main class="">
-    <header class="beer-cellar-header">
-      <span>Beer Cellar</span>
+    <header class="beer-cellar-header flex">
+      <span class="beer-cellar-header__title">Beer Cellar</span>
+      <a href="#" class="beer-cellar-header__link">
+        <img class="beer-cellar-header__link-icon" src="../assets/icons/sort.svg">
+      </a>
+      <a href="#" class="beer-cellar-header__link">
+        <img class="beer-cellar-header__link-icon" src="../assets/icons/filter.svg">
+      </a>
+      <a href="#" class="beer-cellar-header__link">
+        <img class="beer-cellar-header__link-icon" src="../assets/icons/settings.svg">
+      </a>
     </header>
 
     <!-- <div class="beer-cellar__header flex">
@@ -142,7 +151,26 @@ $xlarge: 1200px;
 .beer-cellar-header {
   background: #ffffff;
   height: 84px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 46px;
   width: 100%;
+
+  &__title {
+    flex: 1 0 auto;
+    font-size: 18px;
+    text-align: left;
+  }
+
+  &__link {
+    display: block;
+    padding-left: 16px;
+  }
+
+  &__link-icon {
+    height: 20px;
+    width: 20px;
+  }
 }
 
 .beer-cellar {
