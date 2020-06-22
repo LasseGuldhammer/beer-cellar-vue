@@ -24,7 +24,7 @@ export default {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -32,9 +32,9 @@ export default {
 }
 
 body {
-  background: #f0f0f0;
+  background: #c4c4c4;
   font-size: 14px;
-  // margin: 0;
+  min-height: 100vh;
 }
 
 .block {

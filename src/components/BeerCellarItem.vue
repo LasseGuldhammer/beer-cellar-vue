@@ -6,24 +6,6 @@
       <span class="beer-cellar__column --brewery">{{ beer.brewery }}</span>
       <span class="beer-cellar__column --style">{{ beer.style }}</span>
 
-      <!-- <span class="beer-cellar__column --brewery">{{ beer.brewery }}</span>
-      <span class="beer-cellar__column --name">{{ beer.name }}</span>
-      <span class="beer-cellar__column --style">{{ beer.style }}</span>
-      <span class="beer-cellar__column --abv">{{ beer.abv }}<small>%</small></span>
-      <span class="beer-cellar__column --size">{{ beer.size }} cl</span>
-      <span class="beer-cellar__column --quantity">{{ beer.quantity }}</span>
-      <span class="beer-cellar__column --age">
-        <span v-if="years !== 0">{{ yearString }}</span>
-        <span v-if="months !== 0 && years !== 0">
-          <br>{{ monthString }}
-        </span>
-        <span v-else-if="months !== 0">
-          {{ monthString }}
-        </span>
-      </span>
-      <span class="beer-cellar__column --status" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
-      <button class="beer-cellar__beer-item-edit" @click="edit">Edit beer</button> -->
-
     </div>
 
     <div class="beer-cellar__beer-item flex --column" :class="{ 'visibility-hidden': editing, 'expanded': expanded }" @click="expandItem">

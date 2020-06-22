@@ -1,5 +1,5 @@
 <template>
-  <main class="">
+  <div>
     <header class="beer-cellar-header flex">
       <span class="beer-cellar-header__title">Beer Cellar</span>
       <a href="#" class="beer-cellar-header__link">
@@ -12,21 +12,11 @@
         <img class="beer-cellar-header__link-icon" src="../assets/icons/settings.svg">
       </a>
     </header>
-
-    <!-- <div class="beer-cellar__header flex">
-      <p class="beer-cellar__column --brewery pointer text-left" @click="sortBeers('brewery')">Brewery</p>
-      <p class="beer-cellar__column --name pointer text-left" @click="sortBeers('name')">Name</p>
-      <p class="beer-cellar__column --style pointer text-left" @click="sortBeers('style')">Style</p>
-      <p class="beer-cellar__column --abv pointer text-right" @click="sortBeers('abv')">Abv</p>
-      <p class="beer-cellar__column --size pointer text-right" @click="sortBeers('size')">Size</p>
-      <p class="beer-cellar__column --quantity pointer text-right" @click="sortBeers('quantity')">Qty.</p>
-      <p class="beer-cellar__column --age pointer text-left" @click="sortBeers('date')">Age</p>
-      <p class="beer-cellar__column --status pointer text-left" @click="sortBeers('status')">Status</p>
-    </div> -->
-
+  <main class="beer-cellar-wrapper">
     <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-cellar-item>
     <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
   </main>
+  </div>
 </template>
 
 <script>
@@ -150,6 +140,7 @@ $xlarge: 1200px;
 
 .beer-cellar-header {
   background: #ffffff;
+  box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.25);
   height: 84px;
   padding-left: 16px;
   padding-right: 16px;
@@ -159,18 +150,24 @@ $xlarge: 1200px;
   &__title {
     flex: 1 0 auto;
     font-size: 18px;
+    font-weight: 700;
+    margin-left: 8px;
     text-align: left;
   }
 
   &__link {
     display: block;
-    padding-left: 16px;
+    padding-left: 28px;
   }
 
   &__link-icon {
     height: 20px;
     width: 20px;
   }
+}
+
+.beer-cellar-wrapper {
+  padding: 32px 16px;
 }
 
 .beer-cellar {
