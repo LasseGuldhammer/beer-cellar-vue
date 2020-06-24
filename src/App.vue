@@ -49,6 +49,10 @@ body {
   display: inline-block;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .flex {
   display: flex;
 

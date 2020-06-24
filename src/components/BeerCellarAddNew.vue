@@ -1,7 +1,11 @@
 <template>
-  <section class="relative">
-    <button @click="displayForm = !displayForm">Add new beer</button>
-    <beer-cellar-form v-if="displayForm" @add-beer="addBeer" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>
+  <section class="add-beer__wrapper">
+    <button class="add-beer__button fixed" @click="displayForm = !displayForm"></button>
+    <transition name="fade">
+      <div class="add-beer__form-container absolute" v-if="displayForm">
+        <beer-cellar-form @add-beer="addBeer" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>
+      </div>
+    </transition>
   </section>
 </template>
 

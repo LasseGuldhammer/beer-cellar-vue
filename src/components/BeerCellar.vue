@@ -333,4 +333,35 @@ $xlarge: 1200px;
   }
 }
 
+.add-beer {
+
+  &__wrapper {
+    height: 0;
+    width: 0;
+  }
+
+  &__button {
+    background: #ffffff;
+    background-image: url('../assets/icons/add.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    bottom: 16px;
+    right: 16px;
+    border: 0;
+    border-radius: 100%;
+    box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.25);
+    height: 56px;
+    width: 56px;
+  }
+
+  &__form-container {
+    background: #ffffff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 100;
+  }
+}
+
 </style>
