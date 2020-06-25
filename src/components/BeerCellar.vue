@@ -364,4 +364,21 @@ $xlarge: 1200px;
   }
 }
 
+.grow-enter-active {
+  animation: grow .33s;
+}
+.grow-leave-active {
+  animation: grow .33s reverse;
+}
+@keyframes grow {
+  0% {
+    transform: scale(0);
+    transform-origin: calc(100% - 44px) calc(100% - 44px);
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: calc(100% - 44px) calc(100% - 44px);
+  }
+}
+
 </style>
