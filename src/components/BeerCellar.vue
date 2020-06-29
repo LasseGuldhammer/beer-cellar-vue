@@ -181,6 +181,12 @@ $xlarge: 1200px;
     background: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
+    grid-template-columns: auto 50px 50px 50px;
+    grid-template-rows: auto 25px 25px;
+    grid-template-areas:
+      "name name name name"
+      "brewery brewery . ."
+      "style abv size quantity";
     margin-bottom: 8px;
   }
 
@@ -226,91 +232,42 @@ $xlarge: 1200px;
     padding-left: 8px;
 
     &.--brewery {
-      flex: 0 0 31%;
+      grid-area: brewery;
       text-align: left;
-
-      @media (min-width: $medium) {
-        flex: 0 0 17.5%;
-      }
     }
 
     &.--name {
-      flex: 0 0 43%;
+      grid-area: name;
       font-weight: bold;
       margin-bottom: 4px;
       text-align: left;
-
-      @media (min-width: $medium) {
-        flex: 0 0 22.5%;
-      }
     }
 
     &.--style {
-      flex: 0 0 26%;
+      grid-area: style;
       text-align: left;
-
-      @media (min-width: $medium) {
-        flex: 0 0 15%;
-      }
     }
 
     &.--abv {
-      flex: 0 0 15%;
-      display: none;
-      text-align: left;
-
-      @media (min-width: $medium) {
-        display: inline;
-        flex: 0 0 7.5%;
-        text-align: right;
-      }
+      grid-area: abv;
     }
 
     &.--size {
-      flex: 0 0 15%;
-      display: none;
-      text-align: left;
-
-      @media (min-width: $medium) {
-        display: inline;
-        flex: 0 0 7.5%;
-        text-align: right;
-      }
+      grid-area: size;
     }
 
     &.--quantity {
-      flex: 0 0 15%;
-      padding-right: 24px;
-      display: none;
-      text-align: left;
-
-      @media (min-width: $medium) {
-        display: inline;
-        flex: 0 0 10%;
-        text-align: right;
-      }
+      grid-area: quantity;
     }
 
     &.--age {
-      flex: 0 0 30%;
       display: none;
       text-align: left;
-
-      @media (min-width: $medium) {
-        display: inline;
-        flex: 0 0 10%;
-      }
     }
 
     &.--status {
-      flex: 0 0 25%;
       display: none;
       text-align: left;
-
-      @media (min-width: $medium) {
-        display: inline;
-        flex: 0 0 10%;
-      }
     }
 
     &.--ageing {
