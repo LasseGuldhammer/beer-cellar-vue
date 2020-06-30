@@ -12,10 +12,10 @@
         <img class="beer-cellar-header__link-icon" src="../assets/icons/settings.svg">
       </a>
     </header>
-  <main class="beer-cellar-wrapper">
-    <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-cellar-item>
-    <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
-  </main>
+    <main class="beer-cellar-wrapper">
+      <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-cellar-item>
+      <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
+    </main>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
           name: 'Celebrator',
           style: 'Doppelbock',
           abv: 6.7,
-          quantity: 9,
+          quantity: 11,
           size: 33,
           date: '2018-10-20',
           minimumAge: 1,
@@ -126,17 +126,21 @@ export default {
     }
   },
   created: function () {
-    this.sortBeers('brewery')
+    this.sortBeers('name')
   }
 }
 </script>
 
 <style lang="scss">
 
+/* VARIABLES */
+
 $small: 480px;
 $medium: 768px;
 $large: 992px;
 $xlarge: 1200px;
+
+/* BEER CELLAR HEADER */
 
 .beer-cellar-header {
   background: #ffffff;
@@ -166,6 +170,8 @@ $xlarge: 1200px;
   }
 }
 
+/* BEER_CELLAR */
+
 .beer-cellar-wrapper {
   padding: 32px 16px;
 }
@@ -176,38 +182,6 @@ $xlarge: 1200px;
   padding: 8px;
   width: 100%;
   max-width: none;
-
-  &__beer-item-wrapper {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    grid-template-columns: auto 50px 50px 50px;
-    grid-template-rows: auto 25px 25px;
-    grid-template-areas:
-      "name name name name"
-      "brewery brewery . ."
-      "style abv size quantity";
-    margin-bottom: 8px;
-  }
-
-  &__beer-item {
-    align-items: start;
-    min-height: 40px;
-    padding: 8px 0;
-    width: 50%;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &.expanded {
-      flex-wrap: wrap;
-
-      & .beer-cellar__column {
-        display: inline;
-      }
-    }
-  }
 
   &__beer-form {
     bottom: 0;
@@ -228,54 +202,6 @@ $xlarge: 1200px;
     } */
   }
 
-  &__column {
-    padding-left: 8px;
-
-    &.--brewery {
-      grid-area: brewery;
-      text-align: left;
-    }
-
-    &.--name {
-      grid-area: name;
-      font-weight: bold;
-      margin-bottom: 4px;
-      text-align: left;
-    }
-
-    &.--style {
-      grid-area: style;
-      text-align: left;
-    }
-
-    &.--abv {
-      grid-area: abv;
-    }
-
-    &.--size {
-      grid-area: size;
-    }
-
-    &.--quantity {
-      grid-area: quantity;
-    }
-
-    &.--age {
-      display: none;
-      text-align: left;
-    }
-
-    &.--status {
-      display: none;
-      text-align: left;
-    }
-
-    &.--ageing {
-      color: #c0c0c0;
-      font-style: italic;
-    }
-  }
-
   &__beer-item-edit {
     display: none;
 
@@ -290,12 +216,78 @@ $xlarge: 1200px;
   }
 }
 
-.add-beer {
+/* BEER CELLAR ITEM */
 
-  &__wrapper {
-    height: 0;
-    width: 0;
+.beer-cellar-item {
+  align-items: end;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  justify-items: start;
+  grid-template-columns: auto 45px 45px 35px;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "name name name name"
+    "brewery brewery . ."
+    "style abv size quantity";
+  margin-bottom: 8px;
+  padding: 8px;
+
+  &__name {
+    grid-area: name;
+    font-weight: bold;
+    margin-bottom: 9px;
   }
+
+  &__brewery {
+    grid-area: brewery;
+  }
+
+  &__style {
+    grid-area: style;
+  }
+
+  &__abv {
+    grid-area: abv;
+    justify-self: end;
+  }
+
+  &__size {
+    grid-area: size;
+    justify-self: end;
+  }
+
+  &__quantity {
+    grid-area: quantity;
+    justify-self: end;
+  }
+
+  &__beer-icon {
+    height: 11px;
+    margin-right: 5px;
+  }
+
+  &__age {
+    display: none;
+    text-align: left;
+  }
+
+  &__status {
+    display: none;
+    text-align: left;
+  }
+
+  &__ageing {
+    color: #c0c0c0;
+    font-style: italic;
+  }
+}
+
+/* BEER CELLAR ADD NEW */
+
+.add-beer {
+  height: 0;
+  width: 0;
 
   &__button {
     background: #ffffff;
@@ -319,7 +311,15 @@ $xlarge: 1200px;
     top: 0;
     z-index: 100;
   }
+
+  &__link-text {
+    color: #2c3e50;
+    text-decoration: none;
+    text-decoration-color: #ffffff;
+  }
 }
+
+/* ANIMATIONS */
 
 .grow-enter-active {
   animation: grow .33s;

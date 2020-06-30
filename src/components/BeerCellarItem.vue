@@ -1,12 +1,12 @@
 <template>
-  <div class="beer-cellar__beer-item-wrapper grid relative">
-      <span class="beer-cellar__column --name">{{ beer.name }}</span>
-      <span class="beer-cellar__column --brewery">{{ beer.brewery }}</span>
-      <span class="beer-cellar__column --style">{{ beer.style }}</span>
-      <span class="beer-cellar__column --abv">{{ beer.abv }}<small>%</small></span>
-      <span class="beer-cellar__column --size">{{ beer.size }} cl</span>
-      <span class="beer-cellar__column --quantity"><img src="../assets/icons/beer.svg">{{ beer.quantity }}</span>
-      <span class="beer-cellar__column --age">
+  <div class="beer-cellar-item grid">
+      <span class="beer-cellar-item__name">{{ beer.name }}</span>
+      <span class="beer-cellar-item__brewery">{{ beer.brewery }}</span>
+      <span class="beer-cellar-item__style">{{ beer.style }}</span>
+      <span class="beer-cellar-item__abv">{{ beer.abv }}<small>%</small></span>
+      <span class="beer-cellar-item__size">{{ beer.size }} cl</span>
+      <span class="beer-cellar-item__quantity"><img class="beer-cellar-item__beer-icon" src="../assets/icons/beer.svg">{{ beer.quantity }}</span>
+      <span class="beer-cellar-item__age">
         <span v-if="years !== 0">{{ yearString }}</span>
         <span v-if="months !== 0 && years !== 0">
           <br>{{ monthString }}
@@ -15,42 +15,11 @@
           {{ monthString }}
         </span>
       </span>
-      <span class="beer-cellar__column --status" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
-      <button class="beer-cellar__beer-item-edit" @click="edit">Edit beer</button>
+      <span class="beer-cellar-item__status" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
+      <!-- <button class="beer-cellar-item__edit" @click="edit">Edit beer</button> -->
     <div v-if="this.editing">
       <beer-cellar-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-cellar-form>
     </div>
-
-    <!-- <div class="beer-cellar__beer-item flex --column" :class="{ 'visibility-hidden': editing, 'expanded': expanded }" @click="expandItem">
-
-      <span class="beer-cellar__column --name">{{ beer.name }}</span>
-      <span class="beer-cellar__column --brewery">{{ beer.brewery }}</span>
-      <span class="beer-cellar__column --style">{{ beer.style }}</span>
-
-    </div>
-
-    <div class="beer-cellar__beer-item flex --column" :class="{ 'visibility-hidden': editing, 'expanded': expanded }" @click="expandItem">
-
-      <span class="beer-cellar__column --abv">{{ beer.abv }}<small>%</small></span>
-      <span class="beer-cellar__column --size">{{ beer.size }} cl</span>
-      <span class="beer-cellar__column --quantity">{{ beer.quantity }}</span>
-      <span class="beer-cellar__column --age">
-        <span v-if="years !== 0">{{ yearString }}</span>
-        <span v-if="months !== 0 && years !== 0">
-          <br>{{ monthString }}
-        </span>
-        <span v-else-if="months !== 0">
-          {{ monthString }}
-        </span>
-      </span>
-      <span class="beer-cellar__column --status" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
-      <button class="beer-cellar__beer-item-edit" @click="edit">Edit beer</button>
-
-    </div>
-    <div v-if="this.editing">
-      <beer-cellar-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-cellar-form>
-    </div> -->
-
   </div>
 </template>
 

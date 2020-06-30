@@ -2,7 +2,7 @@
 <!-- <input type="number"> to <input type="text" inputmode="numeric" pattern="[0-9]*"> -->
 
 <template>
-  <section class="beer-cellar__beer-form absolute">
+  <section class="beer-cellar__beer-form">
     <form id="beer-form" ref="beerForm">
       <input id="brewery" ref="brewery" class="beer-cellar__beer-input" type="text" placeholder="Brewery" v-model="newBeer.brewery" @input="checkValidity" @invalid="reportError" data-error="Please enter a name for the brewery" required>
       <input id="name" ref="name" class="beer-cellar__beer-input" type="text" placeholder="Name" v-model="newBeer.name" @input="checkValidity" @invalid="reportError" data-error="Please enter a name for the beer" required>
