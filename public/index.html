@@ -14,9 +14,12 @@
     <title>Beer Cellar</title>
     <style>
       .browserupgrade {
+        color: white;
         display: block;
         font-family: sans-serif;
-        font-size: 1.1em;
+        font-size: 1.75em;
+        line-height: 1.5em;
+        padding: 2em;
         position: absolute;
         height: 100vh;
         width: 100vw;
@@ -24,21 +27,28 @@
         top: 0;
         bottom: 0;
       }
+
+      .browserupgrade a {
+        color: #e3e3e3;
+      }
+
+      .browserupgrade ~ #app {
+        display: none;
+      }
     </style>
   </head>
   <body>
-    <script>
-      if (window.document.documentMode) {
-        var body = document.getElementsByTagName('body')[0];
-        body.innerHTML = '<div class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</div>';
-      }
-    </script>
-    <!--[if IE]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-  <![endif]-->
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <script>
+      if (window.document.documentMode) {
+        var body = document.getElementsByTagName('body')[0];
+        body.innerHTML = '<div class="browserupgrade">You are using an <strong>outdated</strong> browser. <br>Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</div>';
+        var app = document.getElementById('app');
+        app.style('display: none');
+      }
+    </script>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

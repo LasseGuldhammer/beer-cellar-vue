@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <header class="beer-cellar-header flex">
-      <span class="beer-cellar-header__title">Beer Cellar</span>
-      <a href="#" class="beer-cellar-header__link">
-        <img class="beer-cellar-header__link-icon" src="../assets/icons/sort.svg">
+  <div class="beer-cellar">
+    <header class="header flex">
+      <span class="header__title">Beer Cellar</span>
+      <a href="#" class="header__link">
+        <img class="header__link-icon" src="../assets/icons/sort.svg">
       </a>
-      <a href="#" class="beer-cellar-header__link">
-        <img class="beer-cellar-header__link-icon" src="../assets/icons/filter.svg">
+      <a href="#" class="header__link">
+        <img class="header__link-icon" src="../assets/icons/filter.svg">
       </a>
-      <a href="#" class="beer-cellar-header__link">
-        <img class="beer-cellar-header__link-icon" src="../assets/icons/settings.svg">
+      <a href="#" class="header__link">
+        <img class="header__link-icon" src="../assets/icons/settings.svg">
       </a>
     </header>
-    <main class="beer-cellar-wrapper">
+    <main class="beer-cellar__wrapper">
       <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-cellar-item>
       <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
     </main>
@@ -94,7 +94,7 @@ export default {
           quantity: 3,
           size: 33,
           date: '2020-02-01',
-          minimumAge: 0,
+          minimumAge: 1,
           maximumAge: 0,
           status: 'Ageing'
         }
@@ -140,9 +140,24 @@ $medium: 768px;
 $large: 992px;
 $xlarge: 1200px;
 
-/* BEER CELLAR HEADER */
+$wrapper-padding: 32px 16px;
 
-.beer-cellar-header {
+/* BEER CELLAR */
+
+.beer-cellar {
+
+  &__wrapper {
+    padding: $wrapper-padding;
+  }
+
+  &__beer-item-edit {
+    display: none;
+  }
+}
+
+/* HEADER */
+
+.header {
   background: #ffffff;
   box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.25);
   height: 84px;
@@ -170,52 +185,6 @@ $xlarge: 1200px;
   }
 }
 
-/* BEER_CELLAR */
-
-.beer-cellar-wrapper {
-  padding: 32px 16px;
-}
-
-.beer-cellar {
-  box-shadow: 5px 5px 10px #dfdfdf, -5px -5px 10px #ffffff;
-  margin: 0 auto;
-  padding: 8px;
-  width: 100%;
-  max-width: none;
-
-  &__beer-form {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-  }
-
-  &__beer-input {
-    width: 100px;
-
-    /* &:valid {
-      outline: 1px solid green;
-    } */
-
-    /* &:invalid {
-      outline: 1px solid red;
-    } */
-  }
-
-  &__beer-item-edit {
-    display: none;
-
-    @media (min-width: $medium) {
-      display: block;
-    }
-  }
-
-  &__header {
-    font-weight: 700;
-    justify-content: flex-start;
-  }
-}
-
 /* BEER CELLAR ITEM */
 
 .beer-cellar-item {
@@ -227,7 +196,7 @@ $xlarge: 1200px;
   grid-template-columns: auto 45px 45px 35px;
   grid-template-rows: auto auto auto;
   grid-template-areas:
-    "name name name name"
+    "name name status status"
     "brewery brewery . ."
     "style abv size quantity";
   margin-bottom: 8px;
@@ -269,12 +238,21 @@ $xlarge: 1200px;
 
   &__age {
     display: none;
-    text-align: left;
   }
 
   &__status {
-    display: none;
-    text-align: left;
+    color: #004A10;
+    font-size: 12px;
+    font-weight: 300;
+    grid-area: status;
+    align-self: start;
+    justify-self: end;
+  }
+
+  &__checkmark-icon {
+    height: 13px;
+    margin-left: 3px;
+    vertical-align: text-top;
   }
 
   &__ageing {
@@ -316,6 +294,28 @@ $xlarge: 1200px;
     color: #2c3e50;
     text-decoration: none;
     text-decoration-color: #ffffff;
+  }
+}
+
+/* BEER CELLAR FORM */
+
+.beer-form {
+  padding: $wrapper-padding;
+  width: 100%;
+
+  &__input {
+    // background: #e3e3e3;
+    border: 0;
+    border-bottom: 1px solid #e3e3e3;
+    margin-bottom: 56px;
+
+    &.--large {
+      width: 100%;
+    }
+
+    &.--small {
+      width: 40%;
+    }
   }
 }
 

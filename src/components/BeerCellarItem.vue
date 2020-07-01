@@ -15,7 +15,7 @@
           {{ monthString }}
         </span>
       </span>
-      <span class="beer-cellar-item__status" :class="{ '--ageing': !ready }">{{ beer.status }}</span>
+      <span class="beer-cellar-item__status" :class="{ '--ageing': !ready }" v-if="ready">{{ beer.status }}<img class="beer-cellar-item__checkmark-icon" src="../assets/icons/checkmark.svg"></span>
       <!-- <button class="beer-cellar-item__edit" @click="edit">Edit beer</button> -->
     <div v-if="this.editing">
       <beer-cellar-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-cellar-form>
