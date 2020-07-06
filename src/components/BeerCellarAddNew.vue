@@ -5,11 +5,11 @@
       <div class="add-beer__form-container absolute" v-if="displayForm">
         <header class="header flex">
           <span class="header__title">Add Beer</span>
-          <a href="#" class="header__link" @click="displayForm = !displayForm">
-            <span class="header__link-text text-uppercase">Cancel</span>
+          <a href="#" class="header__text-item" @click="displayForm = !displayForm">
+            <span class="text-uppercase">Cancel</span>
           </a>
-          <a href="#" class="header__link">
-            <span class="header__link-text text-uppercase">Save</span>
+          <a href="#" class="header__text-item">
+            <span class="text-uppercase">Save</span>
           </a>
         </header>
         <beer-cellar-form @add-beer="addBeer" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>

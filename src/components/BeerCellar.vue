@@ -2,14 +2,14 @@
   <div class="beer-cellar">
     <header class="header flex">
       <span class="header__title">Beer Cellar</span>
-      <a href="#" class="header__link">
-        <img class="header__link-icon" src="../assets/icons/sort.svg">
+      <a href="#" class="header__image-item">
+        <img class="header__image-item-icon" src="../assets/icons/sort.svg">
       </a>
-      <a href="#" class="header__link">
-        <img class="header__link-icon" src="../assets/icons/filter.svg">
+      <a href="#" class="header__image-item">
+        <img class="header__image-item-icon" src="../assets/icons/filter.svg">
       </a>
-      <a href="#" class="header__link">
-        <img class="header__link-icon" src="../assets/icons/settings.svg">
+      <a href="#" class="header__image-item">
+        <img class="header__image-item-icon" src="../assets/icons/settings.svg">
       </a>
     </header>
     <main class="beer-cellar__wrapper">
@@ -158,30 +158,37 @@ $wrapper-padding: 32px 16px;
 /* HEADER */
 
 .header {
+  align-items: flex-end;
   background: #ffffff;
   box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.25);
   height: 84px;
   padding-left: 16px;
   padding-right: 16px;
-  padding-top: 46px;
   width: 100%;
 
   &__title {
     flex: 1 0 auto;
     font-size: 18px;
     font-weight: 700;
+    margin-bottom: 12px;
     margin-left: 8px;
     text-align: left;
   }
 
-  &__link {
+  &__image-item {
     display: block;
-    padding-left: 28px;
+    padding: 8px 12px;
   }
 
-  &__link-icon {
+  &__image-item-icon {
     height: 20px;
     width: 20px;
+  }
+
+  &__text-item {
+    color: #2c3e50;
+    padding: 12px 16px;
+    text-decoration: none;
   }
 }
 
@@ -263,6 +270,10 @@ $wrapper-padding: 32px 16px;
 
 /* BEER CELLAR ADD NEW */
 
+$button-offset: 16;
+$button-size: 56;
+$button-transform-origin: calc(100% - ($button-offset + ($button-size / 2)));
+
 .add-beer {
   height: 0;
   width: 0;
@@ -272,42 +283,67 @@ $wrapper-padding: 32px 16px;
     background-image: url('../assets/icons/add.svg');
     background-position: center;
     background-repeat: no-repeat;
-    bottom: 16px;
-    right: 16px;
+    bottom: $button-offset + px;
+    right: $button-offset + px;
     border: 0;
     border-radius: 100%;
     box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.25);
-    height: 56px;
-    width: 56px;
+    height: $button-size + px;
+    width: $button-size + px;
   }
 
   &__form-container {
     background: #ffffff;
     bottom: 0;
     left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
     right: 0;
     top: 0;
     z-index: 100;
-  }
-
-  &__link-text {
-    color: #2c3e50;
-    text-decoration: none;
-    text-decoration-color: #ffffff;
   }
 }
 
 /* BEER CELLAR FORM */
 
 .beer-form {
-  padding: $wrapper-padding;
+  padding: 32px 0;
   width: 100%;
 
-  &__input {
-    // background: #e3e3e3;
+  &__fieldset {
     border: 0;
-    border-bottom: 1px solid #e3e3e3;
-    margin-bottom: 56px;
+    margin: 0;
+    padding: 0 16px;
+
+    &.--required {
+      border-bottom: 4px solid #c4c4c4;
+      overflow: hidden;
+    }
+
+    &.--optional {
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      padding-top: 24px;
+    }
+  }
+
+  &__input {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 0;
+    border-bottom: 2px solid #e3e3e3;
+    // flex: 0 0 40%;
+    height: 27px;
+    margin-bottom: 36px;
+
+    &:nth-of-type(3) {
+      margin-bottom: 48px;
+    }
+
+    &[type=date] {
+      color: #909090;
+    }
 
     &.--large {
       width: 100%;
@@ -330,11 +366,11 @@ $wrapper-padding: 32px 16px;
 @keyframes grow {
   0% {
     transform: scale(0);
-    transform-origin: calc(100% - 44px) calc(100% - 44px);
+    transform-origin: $button-transform-origin + px $button-transform-origin + px;
   }
   100% {
     transform: scale(1);
-    transform-origin: calc(100% - 44px) calc(100% - 44px);
+    transform-origin: $button-transform-origin + px $button-transform-origin + px;
   }
 }
 
