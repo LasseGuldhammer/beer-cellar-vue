@@ -272,7 +272,7 @@ $wrapper-padding: 32px 16px;
 
 $button-offset: 16;
 $button-size: 56;
-$button-transform-origin: calc(100% - ($button-offset + ($button-size / 2)));
+$button-transform-origin: $button-offset + ($button-size / 2) + px;
 
 .add-beer {
   height: 0;
@@ -328,12 +328,15 @@ $button-transform-origin: calc(100% - ($button-offset + ($button-size / 2)));
     }
   }
 
+  &__label {
+    font-size: 12px;
+  }
+
   &__input {
     -webkit-appearance: none;
     appearance: none;
-    border: 0;
+    border: 1px solid transparent;
     border-bottom: 2px solid #e3e3e3;
-    // flex: 0 0 40%;
     height: 27px;
     margin-bottom: 36px;
 
@@ -343,6 +346,12 @@ $button-transform-origin: calc(100% - ($button-offset + ($button-size / 2)));
 
     &[type=date] {
       color: #909090;
+    }
+
+    &:active,
+    &:focus {
+      border: 1px solid blue;
+      outline: none;
     }
 
     &.--large {
@@ -366,11 +375,11 @@ $button-transform-origin: calc(100% - ($button-offset + ($button-size / 2)));
 @keyframes grow {
   0% {
     transform: scale(0);
-    transform-origin: $button-transform-origin + px $button-transform-origin + px;
+    transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
   }
   100% {
     transform: scale(1);
-    transform-origin: $button-transform-origin + px $button-transform-origin + px;
+    transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
   }
 }
 

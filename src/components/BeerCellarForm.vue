@@ -38,11 +38,13 @@ export default {
   },
   data () {
     return {
+      isFormValid: false,
       newBeer: {}
     }
   },
   computed: {
     maxDate: function () {
+      // Calculate the current date and save it as a string
       var currentDate = new Date(Date.now())
       var year = currentDate.getFullYear()
       var month = currentDate.getMonth() + 1
@@ -64,7 +66,15 @@ export default {
   methods: {
     checkValidity: function (e) {
       e.target.setCustomValidity('')
-      e.target.checkValidity()
+      const inputValidity = e.target.checkValidity()
+      const formValidity = this.$refs.beerForm.checkValidity()
+      if (inputValidity && formValidity) {
+        this.isFormValid = true
+        this.$emit('add-beer', this.newBeer)
+      } else if (!inputValidity || !formValidity) {
+        this.isFormValid = false
+        this.$emit('add-beer', false)
+      }
     },
     reportError: function (e) {
       if (e.target.value === '') {
