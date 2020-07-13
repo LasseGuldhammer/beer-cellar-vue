@@ -5,14 +5,14 @@
       <div class="add-beer__form-container absolute" v-if="displayForm">
         <header class="header flex">
           <span class="header__title">Add Beer</span>
-          <a href="#" class="header__text-item" @click="displayForm = !displayForm">
-            <span class="text-uppercase">Cancel</span>
-          </a>
-          <a href="#" class="header__text-item">
-            <span class="text-uppercase">Save</span>
-          </a>
+          <button class="header__text-item text-uppercase pointer" @click="displayForm = !displayForm">
+            Cancel
+          </button>
+          <button class="header__text-item text-uppercase pointer" :disabled="disableSaveButton" @click="addBeer">
+            Save
+          </button>
         </header>
-        <beer-cellar-form @add-beer="addBeer" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>
+        <beer-cellar-form @validation="toggleSave" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>
       </div>
     </transition>
   </section>
@@ -29,16 +29,28 @@ export default {
   data () {
     return {
       beer: {},
+      disableSaveButton: true,
       displayForm: false
     }
   },
   methods: {
+    toggleSave: function (valid, beer) {
+      if (valid) {
+        this.disableSaveButton = false
+        this.beer = beer
+      } else {
+        this.disableSaveButton = true
+      }
+    },
     addBeer: function (beer) {
-      this.$emit('add-beer', beer)
-      this.displayForm = false
+      this.$emit('add-beer', this.beer)
+      this.beer = {}
+      this.disableSaveButton = true
+      this.displayForm = !this.displayForm
+      // console.log('BeerCellarAddNew: add new beer')
     },
     saveBeer: function (beer) {
-      this.$emit('save-beer', beer)
+      this.$emit('save-beer', this.beer)
     }
   }
 }

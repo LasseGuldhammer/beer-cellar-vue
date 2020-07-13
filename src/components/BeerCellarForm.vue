@@ -5,7 +5,7 @@
   <section class="beer-form">
     <form id="beer-form" ref="beerForm">
       <fieldset class="beer-form__fieldset --required">
-        <input id="brewery" ref="brewery" class="beer-form__input --large" type="text" placeholder="Brewery" v-model="newBeer.brewery" @input="checkValidity" @invalid="reportError" data-error="Please enter a name for the brewery" required>
+        <input id="brewery" ref="brewery" class="beer-form__input --large" type="text" placeholder="Brewery" v-model="newBeer.brewery" @input="checkValidity" @invalid="reportError" data-error="Please enter a name for the brewery" required autofocus>
         <input id="name" ref="name" class="beer-form__input --large" type="text" placeholder="Name" v-model="newBeer.name" @input="checkValidity" @invalid="reportError" data-error="Please enter a name for the beer" required>
         <input id="style" ref="style" class="beer-form__input --large" type="text" placeholder="Style" v-model="newBeer.style" @input="checkValidity" @invalid="reportError" data-error="Please enter a beer style" required>
       </fieldset>
@@ -70,10 +70,10 @@ export default {
       const formValidity = this.$refs.beerForm.checkValidity()
       if (inputValidity && formValidity) {
         this.isFormValid = true
-        this.$emit('add-beer', this.newBeer)
+        this.$emit('validation', true, this.newBeer)
       } else if (!inputValidity || !formValidity) {
         this.isFormValid = false
-        this.$emit('add-beer', false)
+        this.$emit('validation', false)
       }
     },
     reportError: function (e) {

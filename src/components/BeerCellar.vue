@@ -100,25 +100,28 @@ export default {
         }
       ],
       currentDate: Date.now(),
+      reversed: false,
       sortedBy: '',
       sortedBeers: []
     }
   },
   methods: {
     addNewBeer: function (beer) {
+      // console.log('BeerCellar: add New Beer')
       beer.id = this.beers.length + 1
       this.beers.push(beer)
+      this.sortBeers(this.sortedBy, this.reversed)
     },
     saveBeer: function (beer) {
       Vue.set(this.beers, beer.id - 1, beer)
     },
-    sortBeers: function (param) {
-      if (param !== this.sortedBy) {
+    sortBeers: function (key, reverse) {
+      if (key !== this.sortedBy || !this.reversed) {
         var sortedList = this.beers
         sortedList.sort(function (a, b) {
-          return (a[param] > b[param]) ? 1 : -1
+          return (a[key] > b[key]) ? 1 : -1
         })
-        this.sortedBy = param
+        this.sortedBy = key
         this.sortedBeers = sortedList
       } else {
         this.sortedBeers = this.sortedBeers.reverse()
@@ -126,7 +129,7 @@ export default {
     }
   },
   created: function () {
-    this.sortBeers('name')
+    this.sortBeers('name', this.reversed)
   }
 }
 </script>
@@ -186,6 +189,8 @@ $wrapper-padding: 32px 16px;
   }
 
   &__text-item {
+    background: #ffffff;
+    border: 0;
     color: #2c3e50;
     padding: 12px 16px;
     text-decoration: none;
@@ -270,7 +275,7 @@ $wrapper-padding: 32px 16px;
 
 /* BEER CELLAR ADD NEW */
 
-$button-offset: 16;
+$button-offset: 12;
 $button-size: 56;
 $button-transform-origin: $button-offset + ($button-size / 2) + px;
 

@@ -3,9 +3,9 @@
       <span class="beer-cellar-item__name">{{ beer.name }}</span>
       <span class="beer-cellar-item__brewery">{{ beer.brewery }}</span>
       <span class="beer-cellar-item__style">{{ beer.style }}</span>
-      <span class="beer-cellar-item__abv">{{ beer.abv }}<small>%</small></span>
-      <span class="beer-cellar-item__size">{{ beer.size }} cl</span>
-      <span class="beer-cellar-item__quantity"><img class="beer-cellar-item__beer-icon" src="../assets/icons/beer.svg">{{ beer.quantity }}</span>
+      <span class="beer-cellar-item__abv" v-if="beer.abv">{{ beer.abv }}<small>%</small></span>
+      <span class="beer-cellar-item__size" v-if="beer.size">{{ beer.size }} cl</span>
+      <span class="beer-cellar-item__quantity" v-if="beer.quantity"><img class="beer-cellar-item__beer-icon" src="../assets/icons/beer.svg">{{ beer.quantity }}</span>
       <span class="beer-cellar-item__age">
         <span v-if="years !== 0">{{ yearString }}</span>
         <span v-if="months !== 0 && years !== 0">
