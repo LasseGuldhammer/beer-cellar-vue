@@ -1,22 +1,22 @@
 <template>
   <div class="beer-cellar-item grid">
-      <span class="beer-cellar-item__name">{{ beer.name }}</span>
-      <span class="beer-cellar-item__brewery">{{ beer.brewery }}</span>
-      <span class="beer-cellar-item__style">{{ beer.style }}</span>
-      <span class="beer-cellar-item__abv" v-if="beer.abv">{{ beer.abv }}<small>%</small></span>
-      <span class="beer-cellar-item__size" v-if="beer.size">{{ beer.size }} cl</span>
-      <span class="beer-cellar-item__quantity" v-if="beer.quantity"><img class="beer-cellar-item__beer-icon" src="../assets/icons/beer.svg">{{ beer.quantity }}</span>
-      <span class="beer-cellar-item__age">
-        <span v-if="years !== 0">{{ yearString }}</span>
-        <span v-if="months !== 0 && years !== 0">
-          <br>{{ monthString }}
-        </span>
-        <span v-else-if="months !== 0">
-          {{ monthString }}
-        </span>
+    <span class="beer-cellar-item__name">{{ beer.name }}</span>
+    <span class="beer-cellar-item__brewery">{{ beer.brewery }}</span>
+    <span class="beer-cellar-item__style">{{ beer.style }}</span>
+    <span class="beer-cellar-item__abv" v-if="beer.abv">{{ beer.abv }}<small>%</small></span>
+    <span class="beer-cellar-item__size" v-if="beer.size">{{ beer.size }} cl</span>
+    <span class="beer-cellar-item__quantity" v-if="beer.quantity"><img class="beer-cellar-item__beer-icon" src="../assets/icons/beer.svg">{{ beer.quantity }}</span>
+    <span class="beer-cellar-item__age">
+      <span v-if="years !== 0">{{ yearString }}</span>
+      <span v-if="months !== 0 && years !== 0">
+        <br>{{ monthString }}
       </span>
-      <span class="beer-cellar-item__status" :class="{ '--ageing': !ready }" v-if="ready">{{ beer.status }}<img class="beer-cellar-item__checkmark-icon" src="../assets/icons/checkmark.svg"></span>
-      <!-- <button class="beer-cellar-item__edit" @click="edit">Edit beer</button> -->
+      <span v-else-if="months !== 0">
+        {{ monthString }}
+      </span>
+    </span>
+    <span class="beer-cellar-item__status" v-if="ready">{{ beer.status }}<img class="beer-cellar-item__checkmark-icon" src="../assets/icons/checkmark.svg"></span>
+    <!-- <button class="beer-cellar-item__edit" @click="edit">Edit beer</button> -->
     <div v-if="this.editing">
       <beer-cellar-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-cellar-form>
     </div>

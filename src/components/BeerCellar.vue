@@ -1,6 +1,6 @@
 <template>
   <div class="beer-cellar">
-    <header class="header flex">
+    <header class="header fixed flex">
       <span class="header__title">Beer Cellar</span>
       <a href="#" class="header__image-item">
         <img class="header__image-item-icon" src="../assets/icons/sort.svg">
@@ -107,7 +107,6 @@ export default {
   },
   methods: {
     addNewBeer: function (beer) {
-      // console.log('BeerCellar: add New Beer')
       beer.id = this.beers.length + 1
       this.beers.push(beer)
       this.sortBeers(this.sortedBy, this.reversed)
@@ -148,6 +147,8 @@ $wrapper-padding: 32px 16px;
 /* BEER CELLAR */
 
 .beer-cellar {
+  padding-bottom: 32px;
+  padding-top: 85px;
 
   &__wrapper {
     padding: $wrapper-padding;
@@ -165,8 +166,11 @@ $wrapper-padding: 32px 16px;
   background: #ffffff;
   box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.25);
   height: 84px;
+  left: 0;
   padding-left: 16px;
   padding-right: 16px;
+  right: 0;
+  top: 0;
   width: 100%;
 
   &__title {
@@ -266,11 +270,6 @@ $wrapper-padding: 32px 16px;
     margin-left: 3px;
     vertical-align: text-top;
   }
-
-  &__ageing {
-    color: #c0c0c0;
-    font-style: italic;
-  }
 }
 
 /* BEER CELLAR ADD NEW */
@@ -349,14 +348,32 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
       margin-bottom: 48px;
     }
 
-    &[type=date] {
+    &[type=date]:empty {
       color: #909090;
+    }
+
+    &#abv::before {
+      content: "%";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
     }
 
     &:active,
     &:focus {
-      border: 1px solid blue;
+      // border: 1px solid blue;
       outline: none;
+    }
+
+    &[value=""] {
+      &:valid {
+        border-bottom: 2px solid green;
+      }
+
+      &:invalid {
+        border-bottom: 2px solid red;
+      }
     }
 
     &.--large {

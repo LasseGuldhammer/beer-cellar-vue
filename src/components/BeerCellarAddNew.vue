@@ -1,11 +1,11 @@
 <template>
   <section class="add-beer">
-    <button class="add-beer__button fixed" @click="displayForm = !displayForm"></button>
+    <button class="add-beer__button fixed" @click="toggleForm"></button>
     <transition name="grow">
-      <div class="add-beer__form-container absolute" v-if="displayForm">
+      <div class="add-beer__form-container fixed" v-if="displayForm">
         <header class="header flex">
           <span class="header__title">Add Beer</span>
-          <button class="header__text-item text-uppercase pointer" @click="displayForm = !displayForm">
+          <button class="header__text-item text-uppercase pointer" @click="toggleForm">
             Cancel
           </button>
           <button class="header__text-item text-uppercase pointer" :disabled="disableSaveButton" @click="addBeer">
@@ -34,6 +34,15 @@ export default {
     }
   },
   methods: {
+    toggleForm: function () {
+      const body = document.body
+      this.displayForm = !this.displayForm
+      if (this.displayForm) {
+        body.classList.add('no-scroll')
+      } else {
+        body.classList.remove('no-scroll')
+      }
+    },
     toggleSave: function (valid, beer) {
       if (valid) {
         this.disableSaveButton = false

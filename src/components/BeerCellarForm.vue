@@ -11,14 +11,12 @@
       </fieldset>
       <fieldset class="beer-form__fieldset --optional flex">
         <legend>Optional</legend>
-        <input id="abv" ref="abv" class="beer-form__input --small" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Abv" v-model.number="newBeer.abv" @input="checkValidity" @invalid="reportError" min="0" max="99" step="0.1" data-error="Please enter the alcohol content">
+        <input id="abv" ref="abv" class="beer-form__input --small" type="text" inputmode="numeric" pattern="[0-9]*\.?[0-9]{0,2}" placeholder="Abv" v-model.number="newBeer.abv" @input="checkValidity" @invalid="reportError" min="0" max="99" step="0.1" data-error="Please enter the alcohol content">
         <input id="size" ref="size" class="beer-form__input --small" type="number" placeholder="Size" v-model.number="newBeer.size" @input="checkValidity" @invalid="reportError" min="1" data-error="Please enter the size of the beer">
         <input id="quantity" ref="quantity" class="beer-form__input --small --date" type="number" placeholder="Quantity" v-model.number="newBeer.quantity" @input="checkValidity" @invalid="reportError" min="1" data-error="Please enter the number of beers">
-        <input id="date" ref="date" class="beer-form__input --small" type="date" placeholder="Date" v-model="newBeer.date" :max="maxDate">
+        <input id="date" ref="date" class="beer-form__input --small" type="date" v-model="newBeer.date" :max="maxDate">
         <input id="minimum" ref="minimum" class="beer-form__input --small" type="number" placeholder="Minimum Age" v-model="newBeer.minimumAge">
       </fieldset>
-      <!-- <button type="submit" @click="saveBeer" v-if="mode === 'editBeer'">Save beer</button>
-      <button type="submit" @click="addBeer" v-else>Add new beer</button> -->
     </form>
   </section>
 </template>

@@ -20,7 +20,7 @@ body {
   min-height: 100vh;
 }
 
-button[disabled] {
+button:disabled {
   cursor: not-allowed;
   opacity: 0.66;
 }
@@ -56,6 +56,10 @@ button[disabled] {
 .grid {
   display: block;
   display: grid;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 .pointer {
