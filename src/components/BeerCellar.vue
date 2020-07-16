@@ -270,6 +270,17 @@ $wrapper-padding: 32px 16px;
     margin-left: 3px;
     vertical-align: text-top;
   }
+
+  &__expanded-wrapper {
+    background: #ffffff;
+    bottom: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    right: 0;
+    top: 0;
+    z-index: 100;
+  }
 }
 
 /* BEER CELLAR ADD NEW */
@@ -343,6 +354,7 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     border-bottom: 2px solid #e3e3e3;
     height: 27px;
     margin-bottom: 36px;
+    position: relative;
 
     &:nth-of-type(3) {
       margin-bottom: 48px;
@@ -352,18 +364,13 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
       color: #909090;
     }
 
-    &#abv::before {
-      content: "%";
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      z-index: 100;
-    }
-
     &:active,
     &:focus {
-      // border: 1px solid blue;
       outline: none;
+    }
+
+    &[required] {
+      box-shadow: none;
     }
 
     &[value=""] {
@@ -389,10 +396,10 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
 /* ANIMATIONS */
 
 .grow-enter-active {
-  animation: grow .33s;
+  animation: grow .25s ease-out
 }
 .grow-leave-active {
-  animation: grow .33s reverse;
+  animation: grow .33s ease-in reverse;
 }
 @keyframes grow {
   0% {
