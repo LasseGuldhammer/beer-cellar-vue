@@ -250,6 +250,10 @@ $wrapper-padding: 32px 16px;
   &__beer-icon {
     height: 11px;
     margin-right: 5px;
+
+    &.--big {
+      height: 15px;
+    }
   }
 
   &__age {
@@ -269,10 +273,18 @@ $wrapper-padding: 32px 16px;
     height: 13px;
     margin-left: 3px;
     vertical-align: text-top;
+
+    &.--big {
+      height: 15px;
+    }
   }
 
   &__expanded-wrapper {
     background: #ffffff;
+    // background-image: url(../assets/icons/beer.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40%;
     bottom: 0;
     left: 0;
     overflow-x: hidden;
@@ -280,6 +292,58 @@ $wrapper-padding: 32px 16px;
     right: 0;
     top: 0;
     z-index: 100;
+  }
+
+  &__expanded-heading {
+    font-size: 36px;
+    margin: 42px 0;
+  }
+
+  &__expanded-paragraph {
+    font-size: 24px;
+    margin: 0 0 6px 0;
+  }
+
+  &__expanded-details {
+    font-size: 18px;
+    justify-content: space-evenly;
+    margin-top: 48px;
+  }
+
+  &__expanded-status {
+    font-size: 16px;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "status1 status2"
+      "age1 age2"
+      "min1 min2";
+    margin-top: 48px;
+  }
+
+  &__expanded-status-item {
+    margin-bottom: 16px;
+    padding-right: 8px;
+    text-align: right;
+
+    &:nth-of-type(even) {
+      font-weight: 300;
+      padding-left: 8px;
+      text-align: left;
+    }
+  }
+
+  &__expanded-buttons {
+    justify-content: center;
+    margin: 40px auto 0;
+  }
+
+  &__expanded-buttons-item {
+    background: #ffffff;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 0 20px;
+    padding: 8px;
   }
 }
 

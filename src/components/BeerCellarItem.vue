@@ -1,6 +1,8 @@
 <template>
   <section>
-    <div class="beer-cellar-item pointer grid" @click="expanded = !expanded">
+
+    <!-- List view -->
+    <div class="beer-cellar-item pointer grid" @click="expandItem">
       <span class="beer-cellar-item__name">{{ beer.name }}</span>
       <span class="beer-cellar-item__brewery">{{ beer.brewery }}</span>
       <span class="beer-cellar-item__style">{{ beer.style }}</span>
@@ -8,13 +10,7 @@
       <span class="beer-cellar-item__size" v-if="beer.size">{{ beer.size }} cl</span>
       <span class="beer-cellar-item__quantity" v-if="beer.quantity"><img class="beer-cellar-item__beer-icon" src="../assets/icons/beer.svg">{{ beer.quantity }}</span>
       <span class="beer-cellar-item__age">
-        <span v-if="years !== 0">{{ yearString }}</span>
-        <span v-if="months !== 0 && years !== 0">
-          <br>{{ monthString }}
-        </span>
-        <span v-else-if="months !== 0">
-          {{ monthString }}
-        </span>
+        {{ age }}
       </span>
       <span class="beer-cellar-item__status" v-if="ready">{{ beer.status }}<img class="beer-cellar-item__checkmark-icon" src="../assets/icons/checkmark.svg"></span>
       <!-- <button class="beer-cellar-item__edit" @click="edit">Edit beer</button> -->
@@ -22,35 +18,37 @@
         <beer-cellar-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-cellar-form>
       </div>
     </div>
+
+    <!-- Expanded view -->
     <div class="beer-cellar-item__expanded-wrapper absolute" v-if="expanded">
       <header class="header flex">
         <span class="header__title">Beer Details</span>
-        <button class="header__text-item text-uppercase pointer" @click="expanded = !expanded">
+        <button class="header__text-item text-uppercase pointer" @click="expandItem">
           Cancel
         </button>
         <button class="header__text-item text-uppercase pointer">
           Edit
         </button>
       </header>
-      <h1>{{ beer.name }}</h1>
-      <p>{{ beer.brewery }}</p>
-      <p>{{ beer.style }}</p>
-      <div class="flex">
-        <span>{{ beer.abv }} </span>
-        <span>{{ beer.size }} </span>
-        <span>{{ beer.quantity }}</span>
+      <h1 class="beer-cellar-item__expanded-heading">{{ beer.name }}</h1>
+      <p class="beer-cellar-item__expanded-paragraph">{{ beer.brewery }}</p>
+      <p class="beer-cellar-item__expanded-paragraph">{{ beer.style }}</p>
+      <div class="beer-cellar-item__expanded-details flex">
+        <span v-if="beer.abv">{{ beer.abv }}%</span>
+        <span v-if="beer.size">{{ beer.size }} cl</span>
+        <span v-if="beer.quantity"><img class="beer-cellar-item__beer-icon --big" src="../assets/icons/beer.svg"> {{ beer.quantity }}</span>
       </div>
-      <div class="grid">
-        <span>Status</span>
-        <span>{{ beer.status }}</span>
-        <span>Age</span>
-        <span>{{ yearString }}</span><span v-if="monthString > 0">{{ monthString }}</span>
-        <span>Minimum Age</span>
-        <span>{{ beer.minimumAge }}</span>
+      <div class="beer-cellar-item__expanded-status grid">
+        <span class="beer-cellar-item__expanded-status-item">Status</span>
+        <span class="beer-cellar-item__expanded-status-item">{{ beer.status }} <img class="beer-cellar-item__checkmark-icon --big" src="../assets/icons/checkmark.svg" v-if="ready"></span>
+        <span class="beer-cellar-item__expanded-status-item" v-if="age">Age</span>
+        <span class="beer-cellar-item__expanded-status-item" v-if="age">{{ age }}</span>
+        <span class="beer-cellar-item__expanded-status-item" v-if="beer.minimumAge">Minimum Age</span>
+        <span class="beer-cellar-item__expanded-status-item" v-if="beer.minimumAge">{{ beer.minimumAge }} {{ beer.minimumAge === 1 ? 'year' : 'years' }}</span>
       </div>
-      <div class="flex">
-        <button>Drink One</button>
-        <button>Drink All</button>
+      <div class="beer-cellar-item__expanded-buttons flex">
+        <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase">Drink One</button>
+        <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase">Drink All</button>
       </div>
     </div>
   </section>
@@ -77,9 +75,22 @@ export default {
       expanded: false,
       ready: false,
       months: 0,
-      monthString: '',
-      years: 0,
-      yearString: ''
+      years: 0
+    }
+  },
+  computed: {
+    age: function () {
+      let age = ''
+      const years = this.years > 0 ? (this.years === 1 ? '1 year' : this.years + ' years') : ''
+      const months = this.months > 0 ? (this.months === 1 ? '1 month' : this.months + ' months') : ''
+      if (this.years && this.months) {
+        age = years + ', ' + months
+      } else if (this.years) {
+        age = years
+      } else if (this.months) {
+        age = months
+      }
+      return age
     }
   },
   created: function () {
@@ -90,6 +101,7 @@ export default {
       if (this.beer.date === undefined || this.beer.date === '') {
         this.months = 0
         this.years = 0
+        this.beer.status = 'Ageing'
         return
       }
       var date = new Date(this.beer.date)
@@ -99,8 +111,6 @@ export default {
       var totalMonths = Math.floor((this.$parent.currentDate - date) / 2627942400)
       this.years = Math.floor(totalMonths / 12)
       this.months = Math.floor(totalMonths % 12)
-      this.yearString = this.years + (this.years > 1 ? ' years' : ' year')
-      this.monthString = this.months + (this.months > 1 ? ' months' : ' month')
       if (this.years >= this.beer.minimumAge) {
         this.ready = true
         this.beer.status = 'Ready'
@@ -113,7 +123,13 @@ export default {
       this.editing = !this.editing
     },
     expandItem: function () {
+      const body = document.body
       this.expanded = !this.expanded
+      if (this.expanded) {
+        body.classList.add('no-scroll')
+      } else {
+        body.classList.remove('no-scroll')
+      }
     }
   },
   watch: {
