@@ -13,7 +13,7 @@
       </a>
     </header>
     <main class="beer-cellar__wrapper">
-      <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer"></beer-cellar-item>
+      <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne"></beer-cellar-item>
       <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
     </main>
   </div>
@@ -110,6 +110,9 @@ export default {
       beer.id = this.beers.length + 1
       this.beers.push(beer)
       this.sortBeers(this.sortedBy, this.reversed)
+    },
+    drinkOne: function (id) {
+      this.beers[id].quantity -= 1
     },
     saveBeer: function (beer) {
       Vue.set(this.beers, beer.id - 1, beer)
@@ -253,6 +256,7 @@ $wrapper-padding: 32px 16px;
 
     &.--big {
       height: 15px;
+      margin-right: 4px;
     }
   }
 
@@ -289,6 +293,7 @@ $wrapper-padding: 32px 16px;
     left: 0;
     overflow-x: hidden;
     overflow-y: scroll;
+    padding: 84px 8px 8px;
     right: 0;
     top: 0;
     z-index: 100;
@@ -463,9 +468,28 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
   animation: grow .25s ease-out
 }
 .grow-leave-active {
-  animation: grow .33s ease-in reverse;
+  animation: fade-down .20s ease-in reverse;
 }
+
+.grow-fab-enter-active {
+  animation: grow-fab .25s ease-out
+}
+.grow-fab-leave-active {
+  animation: fade-down .20s ease-in reverse;
+}
+
 @keyframes grow {
+  0% {
+    transform: scale(0);
+    // transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
+  }
+  100% {
+    transform: scale(1);
+    // transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
+  }
+}
+
+@keyframes grow-fab {
   0% {
     transform: scale(0);
     transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
@@ -473,6 +497,17 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
   100% {
     transform: scale(1);
     transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
+  }
+}
+
+@keyframes fade-down {
+  0% {
+    opacity: 0.66;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%)
   }
 }
 

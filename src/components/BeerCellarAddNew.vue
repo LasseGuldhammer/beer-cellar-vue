@@ -1,7 +1,7 @@
 <template>
   <section class="add-beer">
     <button class="add-beer__button fixed" @click="toggleForm"></button>
-    <transition name="grow">
+    <transition name="grow-fab">
       <div class="add-beer__form-container fixed" v-if="displayForm">
         <header class="header flex">
           <span class="header__title">Add Beer</span>

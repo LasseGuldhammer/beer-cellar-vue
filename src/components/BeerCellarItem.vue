@@ -20,37 +20,39 @@
     </div>
 
     <!-- Expanded view -->
-    <div class="beer-cellar-item__expanded-wrapper absolute" v-if="expanded">
-      <header class="header flex">
-        <span class="header__title">Beer Details</span>
-        <button class="header__text-item text-uppercase pointer" @click="expandItem">
-          Cancel
-        </button>
-        <button class="header__text-item text-uppercase pointer">
-          Edit
-        </button>
-      </header>
-      <h1 class="beer-cellar-item__expanded-heading">{{ beer.name }}</h1>
-      <p class="beer-cellar-item__expanded-paragraph">{{ beer.brewery }}</p>
-      <p class="beer-cellar-item__expanded-paragraph">{{ beer.style }}</p>
-      <div class="beer-cellar-item__expanded-details flex">
-        <span v-if="beer.abv">{{ beer.abv }}%</span>
-        <span v-if="beer.size">{{ beer.size }} cl</span>
-        <span v-if="beer.quantity"><img class="beer-cellar-item__beer-icon --big" src="../assets/icons/beer.svg"> {{ beer.quantity }}</span>
+    <transition name="grow">
+      <div class="beer-cellar-item__expanded-wrapper absolute" v-if="expanded">
+        <header class="header absolute flex">
+          <span class="header__title">Beer Details</span>
+          <button class="header__text-item text-uppercase pointer" @click="expandItem">
+            Cancel
+          </button>
+          <button class="header__text-item text-uppercase pointer">
+            Edit
+          </button>
+        </header>
+        <h1 class="beer-cellar-item__expanded-heading">{{ beer.name }}</h1>
+        <p class="beer-cellar-item__expanded-paragraph">{{ beer.brewery }}</p>
+        <p class="beer-cellar-item__expanded-paragraph">{{ beer.style }}</p>
+        <div class="beer-cellar-item__expanded-details flex">
+          <span v-if="beer.abv">{{ beer.abv }}%</span>
+          <span v-if="beer.size">{{ beer.size }} cl</span>
+          <span v-if="beer.quantity"><img class="beer-cellar-item__beer-icon --big" src="../assets/icons/beer.svg"> {{ beer.quantity }}</span>
+        </div>
+        <div class="beer-cellar-item__expanded-status grid">
+          <span class="beer-cellar-item__expanded-status-item">Status</span>
+          <span class="beer-cellar-item__expanded-status-item">{{ beer.status }} <img class="beer-cellar-item__checkmark-icon --big" src="../assets/icons/checkmark.svg" v-if="ready"></span>
+          <span class="beer-cellar-item__expanded-status-item" v-if="age">Age</span>
+          <span class="beer-cellar-item__expanded-status-item" v-if="age">{{ age }}</span>
+          <span class="beer-cellar-item__expanded-status-item" v-if="beer.minimumAge">Minimum Age</span>
+          <span class="beer-cellar-item__expanded-status-item" v-if="beer.minimumAge">{{ beer.minimumAge }} {{ beer.minimumAge === 1 ? 'year' : 'years' }}</span>
+        </div>
+        <div class="beer-cellar-item__expanded-buttons flex">
+          <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase" @click="drinkOne">Drink One</button>
+          <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase" @click="drinkAll">Drink All</button>
+        </div>
       </div>
-      <div class="beer-cellar-item__expanded-status grid">
-        <span class="beer-cellar-item__expanded-status-item">Status</span>
-        <span class="beer-cellar-item__expanded-status-item">{{ beer.status }} <img class="beer-cellar-item__checkmark-icon --big" src="../assets/icons/checkmark.svg" v-if="ready"></span>
-        <span class="beer-cellar-item__expanded-status-item" v-if="age">Age</span>
-        <span class="beer-cellar-item__expanded-status-item" v-if="age">{{ age }}</span>
-        <span class="beer-cellar-item__expanded-status-item" v-if="beer.minimumAge">Minimum Age</span>
-        <span class="beer-cellar-item__expanded-status-item" v-if="beer.minimumAge">{{ beer.minimumAge }} {{ beer.minimumAge === 1 ? 'year' : 'years' }}</span>
-      </div>
-      <div class="beer-cellar-item__expanded-buttons flex">
-        <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase">Drink One</button>
-        <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase">Drink All</button>
-      </div>
-    </div>
+    </transition>
   </section>
 
 </template>
@@ -116,6 +118,12 @@ export default {
         this.beer.status = 'Ready'
       }
     },
+    drinkAll: function () {
+
+    },
+    drinkOne: function () {
+      this.$emit('drink-one', this.beer.id)
+    },
     edit: function (beer) {
       if (this.editing) {
         this.$emit('save-beer', beer)
@@ -128,7 +136,9 @@ export default {
       if (this.expanded) {
         body.classList.add('no-scroll')
       } else {
-        body.classList.remove('no-scroll')
+        setTimeout(function () {
+          body.classList.remove('no-scroll')
+        }, 250)
       }
     }
   },
