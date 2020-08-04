@@ -13,7 +13,7 @@
       </a>
     </header>
     <main class="beer-cellar__wrapper">
-      <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne"></beer-cellar-item>
+      <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
       <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
     </main>
   </div>
@@ -34,7 +34,7 @@ export default {
     return {
       beers: [
         {
-          id: 1,
+          id: 0,
           brewery: 'AleSmith',
           name: 'Speedway Stout',
           style: 'Imperial stout',
@@ -47,7 +47,7 @@ export default {
           status: 'Ageing'
         },
         {
-          id: 2,
+          id: 1,
           brewery: 'Ayinger',
           name: 'Celebrator',
           style: 'Doppelbock',
@@ -60,7 +60,7 @@ export default {
           status: 'Ageing'
         },
         {
-          id: 3,
+          id: 2,
           brewery: 'Brouwerij Bosteels',
           name: 'Tripel Karmeliet',
           style: 'Tripel',
@@ -73,7 +73,7 @@ export default {
           status: 'Ageing'
         },
         {
-          id: 4,
+          id: 3,
           brewery: 'Stigbergets',
           name: 'Amazing Haze',
           style: 'IPA',
@@ -86,7 +86,7 @@ export default {
           status: 'Ageing'
         },
         {
-          id: 5,
+          id: 4,
           brewery: 'To Øl',
           name: 'Black Malts & Body Salts',
           style: 'Black DIPA',
@@ -107,12 +107,34 @@ export default {
   },
   methods: {
     addNewBeer: function (beer) {
-      beer.id = this.beers.length + 1
+      beer.id = this.beers.length
       this.beers.push(beer)
       this.sortBeers(this.sortedBy, this.reversed)
     },
     drinkOne: function (id) {
-      this.beers[id].quantity -= 1
+      let quantity
+      this.beers.forEach(function (item) {
+        if (id === item.id) {
+          item.quantity -= 1
+          quantity = item.quantity
+        }
+      })
+      if (quantity === 0) {
+        this.removeBeer(id)
+      }
+    },
+    removeBeer: function (id) {
+      const beers = this.beers
+      let beerItem
+      this.beers.forEach(function (item) {
+        if (id === item.id) {
+          beerItem = item
+        }
+      })
+      const position = this.beers.indexOf(beerItem)
+      setTimeout(function () {
+        beers.splice(position, 1)
+      }, 250)
     },
     saveBeer: function (beer) {
       Vue.set(this.beers, beer.id - 1, beer)

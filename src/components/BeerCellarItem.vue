@@ -2,7 +2,7 @@
   <section>
 
     <!-- List view -->
-    <div class="beer-cellar-item pointer grid" @click="expandItem">
+    <div class="beer-cellar-item pointer grid" @click="toggleExpand">
       <span class="beer-cellar-item__name">{{ beer.name }}</span>
       <span class="beer-cellar-item__brewery">{{ beer.brewery }}</span>
       <span class="beer-cellar-item__style">{{ beer.style }}</span>
@@ -24,8 +24,8 @@
       <div class="beer-cellar-item__expanded-wrapper absolute" v-if="expanded">
         <header class="header absolute flex">
           <span class="header__title">Beer Details</span>
-          <button class="header__text-item text-uppercase pointer" @click="expandItem">
-            Cancel
+          <button class="header__text-item text-uppercase pointer" @click="toggleExpand">
+            Close
           </button>
           <button class="header__text-item text-uppercase pointer">
             Edit
@@ -119,9 +119,13 @@ export default {
       }
     },
     drinkAll: function () {
-
+      this.toggleExpand()
+      this.$emit('drink-all', this.beer.id)
     },
     drinkOne: function () {
+      if (this.beer.quantity === 1) {
+        this.toggleExpand()
+      }
       this.$emit('drink-one', this.beer.id)
     },
     edit: function (beer) {
@@ -130,7 +134,7 @@ export default {
       }
       this.editing = !this.editing
     },
-    expandItem: function () {
+    toggleExpand: function () {
       const body = document.body
       this.expanded = !this.expanded
       if (this.expanded) {
