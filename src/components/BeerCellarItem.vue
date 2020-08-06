@@ -13,10 +13,6 @@
         {{ age }}
       </span>
       <span class="beer-cellar-item__status" v-if="ready">{{ beer.status }}<img class="beer-cellar-item__checkmark-icon" src="../assets/icons/checkmark.svg"></span>
-      <!-- <button class="beer-cellar-item__edit" @click="edit">Edit beer</button> -->
-      <div v-if="this.editing">
-        <beer-cellar-form :beer="beer" @save-beer="edit" mode="editBeer"></beer-cellar-form>
-      </div>
     </div>
 
     <!-- Expanded view -->
@@ -27,7 +23,7 @@
           <button class="header__text-item text-uppercase pointer" @click="toggleExpand">
             Close
           </button>
-          <button class="header__text-item text-uppercase pointer">
+          <button class="header__text-item text-uppercase pointer" @click="editing = !editing">
             Edit
           </button>
         </header>
@@ -51,6 +47,7 @@
           <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase" @click="drinkOne">Drink One</button>
           <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase" @click="drinkAll">Drink All</button>
         </div>
+        <beer-cellar-form @validation="toggleSaveButton" mode="editBeer" :beer="beer" v-if="this.editing"></beer-cellar-form>
       </div>
     </transition>
   </section>
@@ -144,13 +141,23 @@ export default {
           body.classList.remove('no-scroll')
         }, 250)
       }
+    },
+    toggleSaveButton: function (valid, beer) {
+      if (valid) {
+        this.disableSaveButton = false
+        this.beer = beer
+      } else {
+        this.disableSaveButton = true
+      }
     }
   },
   watch: {
     beer: {
       deep: true,
       handler (val, oldVal) {
-        this.calculateAge()
+        if (val.date !== oldVal.date) {
+          this.calculateAge()
+        }
       }
     }
   }

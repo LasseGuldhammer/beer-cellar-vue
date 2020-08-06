@@ -168,12 +168,13 @@ $large: 992px;
 $xlarge: 1200px;
 
 $wrapper-padding: 32px 16px;
+$header-height: 72px;
 
 /* BEER CELLAR */
 
 .beer-cellar {
   padding-bottom: 32px;
-  padding-top: 85px;
+  padding-top: $header-height;
 
   &__wrapper {
     padding: $wrapper-padding;
@@ -190,7 +191,7 @@ $wrapper-padding: 32px 16px;
   align-items: flex-end;
   background: #ffffff;
   box-shadow: 0 2px 8px 0 rgba($color: #000000, $alpha: 0.25);
-  height: 84px;
+  height: $header-height;
   left: 0;
   padding-left: 16px;
   padding-right: 16px;
@@ -302,6 +303,8 @@ $wrapper-padding: 32px 16px;
 
     &.--big {
       height: 15px;
+      margin-left: 1px;
+      vertical-align: initial;
     }
   }
 

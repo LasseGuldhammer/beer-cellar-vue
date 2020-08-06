@@ -12,7 +12,7 @@
             Save
           </button>
         </header>
-        <beer-cellar-form @validation="toggleSave" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>
+        <beer-cellar-form @validation="toggleSaveButton" @save-beer="saveBeer" mode="addNewBeer"></beer-cellar-form>
       </div>
     </transition>
   </section>
@@ -43,7 +43,7 @@ export default {
         body.classList.remove('no-scroll')
       }
     },
-    toggleSave: function (valid, beer) {
+    toggleSaveButton: function (valid, beer) {
       if (valid) {
         this.disableSaveButton = false
         this.beer = beer
@@ -56,7 +56,6 @@ export default {
       this.beer = {}
       this.disableSaveButton = true
       this.displayForm = !this.displayForm
-      // console.log('BeerCellarAddNew: add new beer')
     },
     saveBeer: function (beer) {
       this.$emit('save-beer', this.beer)
