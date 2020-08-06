@@ -123,21 +123,25 @@ export default {
         this.removeBeer(id)
       }
     },
-    removeBeer: function (id) {
-      const beers = this.beers
+    getBeerPosition: function (id) {
       let beerItem
       this.beers.forEach(function (item) {
         if (id === item.id) {
           beerItem = item
         }
       })
-      const position = this.beers.indexOf(beerItem)
+      return this.beers.indexOf(beerItem)
+    },
+    removeBeer: function (id) {
+      const beers = this.beers
+      const position = this.getBeerPosition(id)
       setTimeout(function () {
         beers.splice(position, 1)
       }, 250)
     },
     saveBeer: function (beer) {
-      Vue.set(this.beers, beer.id - 1, beer)
+      const position = this.getBeerPosition(beer.id)
+      Vue.set(this.beers, position, beer)
     },
     sortBeers: function (key, reverse) {
       if (key !== this.sortedBy || !this.reversed) {
@@ -198,6 +202,10 @@ $header-height: 72px;
   right: 0;
   top: 0;
   width: 100%;
+
+  &.--form {
+    margin-bottom: 32px;
+  }
 
   &__title {
     flex: 1 0 auto;
@@ -401,23 +409,24 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     width: $button-size + px;
   }
 
-  &__form-container {
-    background: #ffffff;
-    bottom: 0;
-    left: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    right: 0;
-    top: 0;
-    z-index: 100;
-  }
+  /* &__form-container {
+
+  } */
 }
 
 /* BEER CELLAR FORM */
 
 .beer-form {
-  padding: 32px 0;
+  background: #ffffff;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  // padding: 32px 0;
+  right: 0;
+  top: 0;
   width: 100%;
+  z-index: 200;
 
   &__fieldset {
     border: 0;

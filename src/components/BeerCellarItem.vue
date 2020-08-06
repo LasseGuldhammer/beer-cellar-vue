@@ -23,7 +23,7 @@
           <button class="header__text-item text-uppercase pointer" @click="toggleExpand">
             Close
           </button>
-          <button class="header__text-item text-uppercase pointer" @click="editing = !editing">
+          <button class="header__text-item text-uppercase pointer" @click="displayForm = !displayForm">
             Edit
           </button>
         </header>
@@ -47,7 +47,7 @@
           <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase" @click="drinkOne">Drink One</button>
           <button class="beer-cellar-item__expanded-buttons-item pointer text-uppercase" @click="drinkAll">Drink All</button>
         </div>
-        <beer-cellar-form @validation="toggleSaveButton" mode="editBeer" :beer="beer" v-if="this.editing"></beer-cellar-form>
+        <beer-cellar-form :display-form="displayForm" @toggle-form="toggleForm" @save-beer="saveBeer" mode="editBeer" :beer="beer" v-if="displayForm"></beer-cellar-form>
       </div>
     </transition>
   </section>
@@ -70,6 +70,7 @@ export default {
   },
   data () {
     return {
+      displayForm: false,
       editing: false,
       expanded: false,
       ready: false,
@@ -130,6 +131,13 @@ export default {
         this.$emit('save-beer', beer)
       }
       this.editing = !this.editing
+    },
+    saveBeer: function (beer) {
+      this.$emit('save-beer', beer)
+      this.displayForm = !this.displayForm
+    },
+    toggleForm: function () {
+      this.displayForm = !this.displayForm
     },
     toggleExpand: function () {
       const body = document.body

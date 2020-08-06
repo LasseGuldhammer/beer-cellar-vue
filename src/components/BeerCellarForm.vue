@@ -2,7 +2,19 @@
 <!-- <input type="number"> to <input type="text" inputmode="numeric" pattern="[0-9]*"> -->
 
 <template>
-  <section class="beer-form">
+  <section class="beer-form absolute" v-if="displayForm">
+    <header class="header --form flex">
+      <span class="header__title">{{ headerTitle }}</span>
+      <button class="header__text-item text-uppercase pointer" @click="toggleForm">
+        Cancel
+      </button>
+      <button class="header__text-item text-uppercase pointer" :disabled="!isFormValid" @click="addBeer" v-if="mode === 'addNewBeer'">
+        Save
+      </button>
+      <button class="header__text-item text-uppercase pointer" :disabled="!isFormValid" @click="saveBeer" v-if="mode === 'editBeer'">
+        Save
+      </button>
+    </header>
     <form id="beer-form" ref="beerForm">
       <fieldset class="beer-form__fieldset --required">
         <input id="brewery" ref="brewery" class="beer-form__input --large" type="text" placeholder="Brewery" v-model="newBeer.brewery" @input="checkValidity" @invalid="reportError" data-error="Please enter a name for the brewery" required autofocus>
@@ -29,6 +41,10 @@ export default {
       type: Object,
       required: false
     },
+    displayForm: {
+      type: Boolean,
+      required: true
+    },
     mode: {
       type: String,
       required: true
@@ -36,11 +52,15 @@ export default {
   },
   data () {
     return {
+      disableSaveButton: true,
       isFormValid: false,
       newBeer: {}
     }
   },
   computed: {
+    headerTitle: function () {
+      return this.mode === 'addNewBeer' ? 'Add New Beer' : 'Edit Beer'
+    },
     maxDate: function () {
       // Calculate the current date and save it as a string
       var currentDate = new Date(Date.now())
@@ -61,6 +81,11 @@ export default {
       this.newBeer = JSON.parse(JSON.stringify(this.beer))
     }
   },
+  mounted: function () {
+    if (this.mode === 'editBeer') {
+      this.isFormValid = this.$refs.beerForm.checkValidity()
+    }
+  },
   methods: {
     checkValidity: function (e) {
       e.target.setCustomValidity('')
@@ -68,15 +93,25 @@ export default {
       const formValidity = this.$refs.beerForm.checkValidity()
       if (inputValidity && formValidity) {
         this.isFormValid = true
-        this.$emit('validation', true, this.newBeer)
+        // this.$emit('validation', true, this.newBeer)
       } else if (!inputValidity || !formValidity) {
         this.isFormValid = false
-        this.$emit('validation', false)
+        // this.$emit('validation', false)
       }
     },
     reportError: function (e) {
       if (e.target.value === '') {
         e.target.setCustomValidity(e.target.dataset.error)
+      }
+    },
+    toggleForm: function () {
+      const body = document.body
+      // this.displayForm = !this.displayForm
+      this.$emit('toggle-form')
+      if (this.displayForm) {
+        body.classList.add('no-scroll')
+      } else {
+        body.classList.remove('no-scroll')
       }
     },
     validateForm: function () {
@@ -91,7 +126,7 @@ export default {
     addBeer: function () {
       if (this.validateForm()) {
         this.$emit('add-beer', this.newBeer)
-        this.newBeer = {}
+        // this.newBeer = {}
       }
     }
   }
