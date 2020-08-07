@@ -41,7 +41,7 @@ export default {
           abv: 12,
           quantity: 8,
           size: 47,
-          date: '2017-12-11',
+          date: '2016-12-11',
           minimumAge: 3,
           maximumAge: 0,
           status: 'Ageing'
@@ -80,7 +80,7 @@ export default {
           abv: 6.4,
           quantity: 2,
           size: 44,
-          date: '2020-01-04',
+          date: '2020-04-04',
           minimumAge: 0,
           maximumAge: 0,
           status: 'Ageing'
@@ -408,10 +408,6 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     height: $button-size + px;
     width: $button-size + px;
   }
-
-  /* &__form-container {
-
-  } */
 }
 
 /* BEER CELLAR FORM */
@@ -439,8 +435,12 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     }
 
     &.--optional {
-      justify-content: space-between;
-      flex-wrap: wrap;
+      grid-template-columns: 40% auto 40%;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        "abv . size"
+        "quantity . date"
+        "minimum . .";
       margin-top: 12px;
       padding-top: 24px;
     }
@@ -458,6 +458,46 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     height: 27px;
     margin-bottom: 36px;
     position: relative;
+
+    &#abv {
+      grid-area: abv;
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+
+    &#size {
+      grid-area: size;
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 2;
+    }
+
+    &#quantity {
+      grid-area: quantity;
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 2;
+      grid-row-end: 3;
+    }
+
+    &#date {
+      grid-area: date;
+      grid-column-start: 3;
+      grid-column-end: 4;
+      grid-row-start: 2;
+      grid-row-end: 3;
+    }
+
+    &#minimum {
+      grid-area: minimum;
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 3;
+      grid-row-end: 4;
+    }
 
     &:nth-of-type(3) {
       margin-bottom: 48px;
@@ -491,7 +531,8 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     }
 
     &.--small {
-      width: 40%;
+      display: inline-block;
+      width: auto;
     }
   }
 }

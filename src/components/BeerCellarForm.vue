@@ -21,13 +21,13 @@
         <input id="name" ref="name" class="beer-form__input --large" type="text" placeholder="Name" v-model="newBeer.name" @input="checkValidity" @invalid="reportError" data-error="Please enter a name for the beer" required>
         <input id="style" ref="style" class="beer-form__input --large" type="text" placeholder="Style" v-model="newBeer.style" @input="checkValidity" @invalid="reportError" data-error="Please enter a beer style" required>
       </fieldset>
-      <fieldset class="beer-form__fieldset --optional flex">
+      <fieldset class="beer-form__fieldset --optional grid">
         <legend>Optional</legend>
         <input id="abv" ref="abv" class="beer-form__input --small" type="text" inputmode="numeric" pattern="[0-9]*\.?[0-9]{0,2}" placeholder="Abv" v-model.number="newBeer.abv" @input="checkValidity" @invalid="reportError" min="0" max="99" step="0.1" data-error="Please only use numbers">
         <input id="size" ref="size" class="beer-form__input --small" type="number" placeholder="Size" v-model.number="newBeer.size" @input="checkValidity" @invalid="reportError" min="1" data-error="Please only use numbers">
         <input id="quantity" ref="quantity" class="beer-form__input --small --date" type="number" placeholder="Quantity" v-model.number="newBeer.quantity" @input="checkValidity" @invalid="reportError" min="1" data-error="Please only use numbers">
         <input id="date" ref="date" class="beer-form__input --small" type="date" v-model="newBeer.date" :max="maxDate">
-        <input id="minimum" ref="minimum" class="beer-form__input --small" type="number" placeholder="Minimum Age" v-model="newBeer.minimumAge">
+        <input id="minimum" ref="minimum" class="beer-form__input --small" type="number" placeholder="Minimum Age" v-model.number="newBeer.minimumAge">
       </fieldset>
     </form>
   </section>

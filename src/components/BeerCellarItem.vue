@@ -111,7 +111,7 @@ export default {
       var totalMonths = Math.floor((this.$parent.currentDate - date) / 2627942400)
       this.years = Math.floor(totalMonths / 12)
       this.months = Math.floor(totalMonths % 12)
-      if (this.years >= this.beer.minimumAge) {
+      if (this.beer.minimumAge !== 0 && this.years >= this.beer.minimumAge) {
         this.ready = true
         this.beer.status = 'Ready'
       }
