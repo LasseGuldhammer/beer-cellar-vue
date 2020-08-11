@@ -418,7 +418,6 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
   left: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  // padding: 32px 0;
   right: 0;
   top: 0;
   width: 100%;
@@ -427,7 +426,8 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
   &__fieldset {
     border: 0;
     margin: 0;
-    padding: 0 16px;
+    max-width: 100%;
+    padding: 0 24px;
 
     &.--required {
       border-bottom: 4px solid #c4c4c4;
@@ -435,19 +435,64 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     }
 
     &.--optional {
-      grid-template-columns: 40% auto 40%;
-      grid-template-rows: auto auto auto;
-      grid-template-areas:
-        "abv . size"
-        "quantity . date"
-        "minimum . .";
       margin-top: 12px;
       padding-top: 24px;
     }
   }
 
-  &__label {
+  &__optional-input-wrapper {
+    grid-template-columns: 40% auto 40%;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "abv . size"
+      "quantity . date"
+      "minimum . .";
+      justify-items: stretch;
+  }
+
+  &__input-wrapper {
+    margin-bottom: 36px;
+    position: relative;
+
+    &.--abv {
+      grid-area: abv;
+
+      &::after {
+        content: "%";
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+      }
+    }
+
+    &.--size {
+      grid-area: size;
+
+      &::after {
+        content: "cl";
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+      }
+    }
+
+    &.--quantity {
+      grid-area: quantity;
+    }
+
+    &.--date {
+      grid-area: date;
+    }
+
+    &.--minimum {
+      grid-area: minimum;
+    }
+  }
+
+  &__input-label {
+    float: left;
     font-size: 12px;
+    margin: 0 0 2px 2px;
   }
 
   &__input {
@@ -456,51 +501,14 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
     border: 1px solid transparent;
     border-bottom: 2px solid #e3e3e3;
     height: 27px;
-    margin-bottom: 36px;
-    position: relative;
-
-    &#abv {
-      grid-area: abv;
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 1;
-      grid-row-end: 2;
-    }
-
-    &#size {
-      grid-area: size;
-      grid-column-start: 3;
-      grid-column-end: 4;
-      grid-row-start: 1;
-      grid-row-end: 2;
-    }
-
-    &#quantity {
-      grid-area: quantity;
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 2;
-      grid-row-end: 3;
-    }
-
-    &#date {
-      grid-area: date;
-      grid-column-start: 3;
-      grid-column-end: 4;
-      grid-row-start: 2;
-      grid-row-end: 3;
-    }
-
-    &#minimum {
-      grid-area: minimum;
-      grid-column-start: 1;
-      grid-column-end: 2;
-      grid-row-start: 3;
-      grid-row-end: 4;
-    }
+    max-width: 100%;
 
     &:nth-of-type(3) {
       margin-bottom: 48px;
+    }
+
+    &[type=date] {
+      color: black;
     }
 
     &[type=date]:empty {
@@ -530,10 +538,10 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
       width: 100%;
     }
 
-    &.--small {
+    /* &.--small {
       display: inline-block;
       width: auto;
-    }
+    } */
   }
 }
 
