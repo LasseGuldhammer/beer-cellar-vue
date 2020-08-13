@@ -5,13 +5,13 @@
   <section class="beer-form absolute" v-if="displayForm">
     <header class="header --form flex">
       <span class="header__title">{{ headerTitle }}</span>
-      <button class="header__text-item text-uppercase pointer" @click="toggleForm">
+      <button class="header__button --text text-uppercase pointer" @click="toggleForm">
         Cancel
       </button>
-      <button class="header__text-item text-uppercase pointer" :disabled="!isFormValid" @click="addBeer" v-if="mode === 'addNewBeer'">
+      <button class="header__button --text text-uppercase pointer" :disabled="!isFormValid" @click="addBeer" v-if="mode === 'addNewBeer'">
         Save
       </button>
-      <button class="header__text-item text-uppercase pointer" :disabled="!isFormValid" @click="saveBeer" v-if="mode === 'editBeer'">
+      <button class="header__button --text text-uppercase pointer" :disabled="!isFormValid" @click="saveBeer" v-if="mode === 'editBeer'">
         Save
       </button>
     </header>
@@ -51,7 +51,7 @@
           </div>
           <div class="beer-form__input-wrapper --minimum">
             <label class="beer-form__input-label" for="minimum">Minimum Age</label>
-            <input id="minimum" ref="minimum" class="beer-form__input --small" type="text" inputmode="numeric" placeholder="Years" v-model.number="newBeer.minimumAge">
+            <input id="minimum" ref="minimum" class="beer-form__input --small" type="text" inputmode="numeric" placeholder="Years" v-model.number="newBeer.minimumAge" :disabled="newBeer.date !== ''">
           </div>
         </div>
       </fieldset>

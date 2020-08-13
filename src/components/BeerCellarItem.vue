@@ -20,16 +20,16 @@
       <div class="beer-cellar-item__expanded-wrapper absolute" v-if="expanded">
         <header class="header absolute flex">
           <span class="header__title">Beer Details</span>
-          <button class="header__text-item text-uppercase pointer" @click="toggleExpand">
+          <button class="header__button --text text-uppercase pointer" @click="toggleExpand">
             Close
           </button>
-          <button class="header__text-item text-uppercase pointer" @click="displayForm = !displayForm">
+          <button class="header__button --text text-uppercase pointer" @click="displayForm = !displayForm">
             Edit
           </button>
         </header>
-        <h1 class="beer-cellar-item__expanded-heading">{{ beer.name }}</h1>
-        <p class="beer-cellar-item__expanded-paragraph">{{ beer.brewery }}</p>
-        <p class="beer-cellar-item__expanded-paragraph">{{ beer.style }}</p>
+        <h1 class="beer-cellar-item__expanded-heading text-center">{{ beer.name }}</h1>
+        <p class="beer-cellar-item__expanded-paragraph text-center">{{ beer.brewery }}</p>
+        <p class="beer-cellar-item__expanded-paragraph text-center">{{ beer.style }}</p>
         <div class="beer-cellar-item__expanded-details flex">
           <span v-if="beer.abv">{{ beer.abv }}%</span>
           <span v-if="beer.size">{{ beer.size }} cl</span>

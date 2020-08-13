@@ -2,15 +2,16 @@
   <div class="beer-cellar">
     <header class="header fixed flex">
       <span class="header__title">Beer Cellar</span>
-      <a href="#" class="header__image-item">
+      <button class="header__button --image pointer" @click="displaySort = !displaySort">
         <img class="header__image-item-icon" src="../assets/icons/sort.svg">
-      </a>
-      <a href="#" class="header__image-item">
+      </button>
+      <button class="header__button --image pointer">
         <img class="header__image-item-icon" src="../assets/icons/filter.svg">
-      </a>
-      <a href="#" class="header__image-item">
+      </button>
+      <button class="header__button --image pointer">
         <img class="header__image-item-icon" src="../assets/icons/settings.svg">
-      </a>
+      </button>
+      <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @sort-beers="sortBeers" v-if="displaySort"></beer-cellar-sort>
     </header>
     <main class="beer-cellar__wrapper">
       <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
@@ -23,12 +24,14 @@
 import Vue from 'vue'
 import BeerCellarItem from './BeerCellarItem.vue'
 import BeerCellarAddNew from './BeerCellarAddNew.vue'
+import BeerCellarSort from './BeerCellarSort.vue'
 
 export default {
   name: 'BeerCellar',
   components: {
     BeerCellarAddNew,
-    BeerCellarItem
+    BeerCellarItem,
+    BeerCellarSort
   },
   data () {
     return {
@@ -100,6 +103,7 @@ export default {
         }
       ],
       currentDate: Date.now(),
+      displaySort: false,
       reversed: false,
       sortedBy: '',
       sortedBeers: []
@@ -144,6 +148,9 @@ export default {
       Vue.set(this.beers, position, beer)
     },
     sortBeers: function (key, reverse) {
+      // console.log('key: ' + key)
+      // console.log('reverse: ' + reverse)
+      this.reversed = reverse
       if (key !== this.sortedBy || !this.reversed) {
         var sortedList = this.beers
         sortedList.sort(function (a, b) {
@@ -207,6 +214,22 @@ $header-height: 72px;
     margin-bottom: 32px;
   }
 
+  &__button {
+    background: #ffffff;
+    border: 0;
+
+    &.--image {
+      display: block;
+      padding: 8px 12px;
+    }
+
+    &.--text {
+      color: #2c3e50;
+      padding: 12px 16px;
+      text-decoration: none;
+    }
+  }
+
   &__title {
     flex: 1 0 auto;
     font-size: 18px;
@@ -216,22 +239,28 @@ $header-height: 72px;
     text-align: left;
   }
 
-  &__image-item {
-    display: block;
-    padding: 8px 12px;
-  }
-
   &__image-item-icon {
     height: 20px;
     width: 20px;
   }
+}
 
-  &__text-item {
-    background: #ffffff;
-    border: 0;
-    color: #2c3e50;
-    padding: 12px 16px;
-    text-decoration: none;
+/* BEER CELLAR SORT */
+
+.beer-cellar-sort {
+  background: #ffffff;
+  // border: 1px solid #004A10;
+  border-radius: 4px;
+  box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
+  left: 50%;
+  padding: 12px;
+  position: absolute;
+  top: calc(100% - 5px);
+  transform: translateX(-50%);
+  z-index: 50;
+
+  &__title {
+    font-weight: 700;
   }
 }
 
