@@ -148,18 +148,26 @@ export default {
       Vue.set(this.beers, position, beer)
     },
     sortBeers: function (key, reverse) {
-      // console.log('key: ' + key)
-      // console.log('reverse: ' + reverse)
-      this.reversed = reverse
-      if (key !== this.sortedBy || !this.reversed) {
-        var sortedList = this.beers
+      const sortedList = this.beers
+      if (key === this.sortedBy && reverse === this.reversed) {
+        return
+      } else if (key !== this.sortedBy && !reverse) {
         sortedList.sort(function (a, b) {
           return (a[key] > b[key]) ? 1 : -1
         })
-        this.sortedBy = key
+        this.sortedBeers = sortedList
+      } else if (key !== this.sortedBy && reverse) {
+        sortedList.sort(function (a, b) {
+          return (a[key] > b[key]) ? -1 : 1
+        })
         this.sortedBeers = sortedList
       } else {
         this.sortedBeers = this.sortedBeers.reverse()
+      }
+      this.sortedBy = key
+      this.reversed = reverse
+      if (this.displaySort) {
+        this.displaySort = false
       }
     }
   },
@@ -261,6 +269,26 @@ $header-height: 72px;
 
   &__title {
     font-weight: 700;
+  }
+
+  &__button-wrapper {
+    flex-flow: column wrap;
+    height: 190px;
+    margin-top: 16px;
+    width: 290px;
+    max-width: 290px;
+  }
+
+  &__button {
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    border-radius: 4px;
+    margin: 6px 8px;
+    padding: 8px;
+
+    &.--active {
+      background: lightgreen;
+    }
   }
 }
 
