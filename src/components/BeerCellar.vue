@@ -11,7 +11,7 @@
       <button class="header__button --image pointer">
         <img class="header__image-item-icon" src="../assets/icons/settings.svg">
       </button>
-      <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @sort-beers="sortBeers" v-if="displaySort"></beer-cellar-sort>
+      <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
     </header>
     <main class="beer-cellar__wrapper">
       <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
@@ -259,16 +259,25 @@ $header-height: 72px;
   background: #ffffff;
   // border: 1px solid #004A10;
   border-radius: 4px;
-  box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.25);
   left: 50%;
   padding: 12px;
   position: absolute;
   top: calc(100% - 5px);
   transform: translateX(-50%);
-  z-index: 50;
+  z-index: 500;
 
   &__title {
+    font-size: 16px;
     font-weight: 700;
+  }
+
+  &__cancel {
+    background-image: url('../assets/icons/cancel.svg');
+    fill: grey;
+    height: 20px;
+    right: 12px;
+    width: 20px;
   }
 
   &__button-wrapper {
@@ -287,7 +296,7 @@ $header-height: 72px;
     padding: 8px;
 
     &.--active {
-      background: lightgreen;
+      background: #e3e3e3;
     }
   }
 }
@@ -605,27 +614,40 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
 /* ANIMATIONS */
 
 .grow-enter-active {
-  animation: grow .25s ease-out
+  animation: grow .25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 .grow-leave-active {
-  animation: fade-down .20s ease-in reverse;
+  animation: fade-down .20s ease-in;
 }
 
 .grow-fab-enter-active {
-  animation: grow-fab .25s ease-out
+  animation: grow-fab .25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 .grow-fab-leave-active {
-  animation: fade-down .20s ease-in reverse;
+  animation: fade-down .20s ease-in;
+}
+
+.scale-in-center {
+  animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes scale-in-center {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes grow {
   0% {
     transform: scale(0);
-    // transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
   }
   100% {
     transform: scale(1);
-    // transform-origin: calc(100% - #{$button-transform-origin}) calc(100% - #{$button-transform-origin});
   }
 }
 
@@ -642,12 +664,12 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
 
 @keyframes fade-down {
   0% {
-    opacity: 0.66;
-    transform: translateY(100%);
+    opacity: 1;
+    transform: translateY(0);
   }
   100% {
-    opacity: 1;
-    transform: translateY(0%)
+    opacity: 0;
+    transform: translateY(1000px)
   }
 }
 
