@@ -1,5 +1,5 @@
 <template>
-  <div class="beer-cellar">
+  <div class="beer-cellar" v-on:click.stop="handleClick($event)">
     <header class="header fixed flex">
       <span class="header__title">Beer Cellar</span>
       <button class="header__button --image pointer" @click="displaySort = !displaySort">
@@ -11,7 +11,7 @@
       <button class="header__button --image pointer">
         <img class="header__image-item-icon" src="../assets/icons/settings.svg">
       </button>
-      <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
+      <beer-cellar-sort ref="beerCellarSort" :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
     </header>
     <main class="beer-cellar__wrapper">
       <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
@@ -135,6 +135,11 @@ export default {
         }
       })
       return this.beers.indexOf(beerItem)
+    },
+    handleClick: function (event) {
+      if (event.target !== this.$refs[0] && this.displaySort) {
+        this.displaySort = false
+      }
     },
     removeBeer: function (id) {
       const beers = this.beers
@@ -262,8 +267,7 @@ $header-height: 72px;
   box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.25);
   left: 50%;
   padding: 12px;
-  position: absolute;
-  top: calc(100% - 5px);
+  top: calc(#{$header-height} - 5px);
   transform: translateX(-50%);
   z-index: 500;
 
@@ -315,8 +319,13 @@ $header-height: 72px;
     "name name status status"
     "brewery brewery . ."
     "style abv size quantity";
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   padding: 8px;
+  transition: box-shadow 0.20s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 8px 3px rgba(0, 0, 0, 0.20);
+  }
 
   &__name {
     grid-area: name;
@@ -620,6 +629,13 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
   animation: fade-down .20s ease-in;
 }
 
+.grow-sort-enter-active {
+  animation: grow-sort .25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+.grow-sort-leave-active {
+  animation: fade-down .20s ease-in;
+}
+
 .grow-fab-enter-active {
   animation: grow-fab .25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
@@ -648,6 +664,17 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes grow-sort {
+  0% {
+    transform: scale(0);
+    transform-origin: 50% 100%;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: center;
   }
 }
 

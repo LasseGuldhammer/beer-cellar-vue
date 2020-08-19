@@ -1,6 +1,6 @@
 <template>
-  <transition name="grow">
-    <div class="beer-cellar-sort">
+  <transition>
+    <div class="beer-cellar-sort absolute">
       <span class="beer-cellar-sort__title">Sort beers by</span>
       <span class="beer-cellar-sort__cancel absolute pointer" @click="hideSort"></span>
       <div class="beer-cellar-sort__button-wrapper flex">
