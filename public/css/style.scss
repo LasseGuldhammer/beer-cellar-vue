@@ -65,6 +65,14 @@ input:disabled {
   display: grid;
 }
 
+.hover-shadow {
+  transition: box-shadow 0.20s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 0 8px 3px rgba(0, 0, 0, 0.20);
+  }
+}
+
 .no-scroll {
   overflow: hidden;
 }

@@ -1,17 +1,18 @@
 <template>
-  <div class="beer-cellar" v-on:click.stop="handleClick($event)">
+  <div class="beer-cellar" @click.stop="handleClick($event)">
     <header class="header fixed flex">
       <span class="header__title">Beer Cellar</span>
       <button class="header__button --image pointer" @click="displaySort = !displaySort">
-        <img class="header__image-item-icon" src="../assets/icons/sort.svg">
+        <img ref="displaySortButton" class="header__image-item-icon" src="../assets/icons/sort.svg">
       </button>
-      <button class="header__button --image pointer">
+      <button class="header__button --image pointer" @click="displayFilter = !displayFilter">
         <img class="header__image-item-icon" src="../assets/icons/filter.svg">
       </button>
       <button class="header__button --image pointer">
         <img class="header__image-item-icon" src="../assets/icons/settings.svg">
       </button>
-      <beer-cellar-sort ref="beerCellarSort" :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
+      <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
+      <beer-cellar-filter v-show="displayFilter"></beer-cellar-filter>
     </header>
     <main class="beer-cellar__wrapper">
       <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
@@ -25,13 +26,15 @@ import Vue from 'vue'
 import BeerCellarItem from './BeerCellarItem.vue'
 import BeerCellarAddNew from './BeerCellarAddNew.vue'
 import BeerCellarSort from './BeerCellarSort.vue'
+import BeerCellarFilter from './BeerCellarFilter'
 
 export default {
   name: 'BeerCellar',
   components: {
     BeerCellarAddNew,
     BeerCellarItem,
-    BeerCellarSort
+    BeerCellarSort,
+    BeerCellarFilter
   },
   data () {
     return {
@@ -102,7 +105,9 @@ export default {
           status: 'Ageing'
         }
       ],
+      breweries: [],
       currentDate: Date.now(),
+      displayFilter: false,
       displaySort: false,
       reversed: false,
       sortedBy: '',
@@ -129,15 +134,24 @@ export default {
     },
     getBeerPosition: function (id) {
       let beerItem
-      this.beers.forEach(function (item) {
-        if (id === item.id) {
-          beerItem = item
+      this.beers.forEach(function (beer) {
+        if (id === beer.id) {
+          beerItem = beer
         }
       })
       return this.beers.indexOf(beerItem)
     },
+    getBreweries: function () {
+      var breweries = []
+      this.beers.forEach(function (beer) {
+        if (breweries.indexOf(beer.brewery) === -1) {
+          breweries.push(beer.brewery)
+        }
+      })
+      this.breweries = breweries
+    },
     handleClick: function (event) {
-      if (event.target !== this.$refs[0] && this.displaySort) {
+      if (event.target !== this.$refs.displaySortButton && this.displaySort) {
         this.displaySort = false
       }
     },
@@ -178,6 +192,7 @@ export default {
   },
   created: function () {
     this.sortBeers('name', this.reversed)
+    this.getBreweries()
   }
 }
 </script>
@@ -197,6 +212,7 @@ $header-height: 72px;
 /* BEER CELLAR */
 
 .beer-cellar {
+  min-height: 100vh;
   padding-bottom: 32px;
   padding-top: $header-height;
 
@@ -262,7 +278,6 @@ $header-height: 72px;
 
 .beer-cellar-sort {
   background: #ffffff;
-  // border: 1px solid #004A10;
   border-radius: 4px;
   box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.25);
   left: 50%;
@@ -321,11 +336,6 @@ $header-height: 72px;
     "style abv size quantity";
   margin-bottom: 12px;
   padding: 8px;
-  transition: box-shadow 0.20s ease-in-out;
-
-  &:hover {
-    box-shadow: 0 0 8px 3px rgba(0, 0, 0, 0.20);
-  }
 
   &__name {
     grid-area: name;
@@ -580,10 +590,6 @@ $button-transform-origin: $button-offset + ($button-size / 2) + px;
 
     &:nth-of-type(3) {
       margin-bottom: 48px;
-    }
-
-    &[type=date] {
-      color: black;
     }
 
     &[type=date]:empty {

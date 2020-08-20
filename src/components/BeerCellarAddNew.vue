@@ -1,6 +1,6 @@
 <template>
   <section class="add-beer">
-    <button class="add-beer__button fixed pointer" @click="toggleForm"></button>
+    <button class="add-beer__button fixed hover-shadow pointer" @click="toggleForm"></button>
     <transition name="grow-fab">
       <beer-cellar-form :display-form="displayForm" @toggle-form="toggleForm" @add-beer="addBeer" mode="addNewBeer" v-if="displayForm"></beer-cellar-form>
     </transition>

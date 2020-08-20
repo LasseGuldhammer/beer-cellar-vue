@@ -47,7 +47,7 @@
           </div>
           <div class="beer-form__input-wrapper --date">
             <label class="beer-form__input-label" for="date">Date</label>
-            <input id="date" ref="date" class="beer-form__input --small" type="date" v-model="newBeer.date" :max="maxDate">
+            <input id="date" ref="date" class="beer-form__input --small" type="date" placeholder="date" v-model="newBeer.date" :max="maxDate">
           </div>
           <div class="beer-form__input-wrapper --minimum">
             <label class="beer-form__input-label" for="minimum">Minimum Age</label>

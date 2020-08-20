@@ -2,7 +2,7 @@
   <section>
 
     <!-- List view -->
-    <div class="beer-cellar-item pointer grid" @click="toggleExpand">
+    <div class="beer-cellar-item pointer grid hover-shadow" @click="toggleExpand">
       <span class="beer-cellar-item__name">{{ beer.name }}</span>
       <span class="beer-cellar-item__brewery">{{ beer.brewery }}</span>
       <span class="beer-cellar-item__style">{{ beer.style }}</span>

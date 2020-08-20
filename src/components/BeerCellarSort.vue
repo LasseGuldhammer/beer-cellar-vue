@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <div class="beer-cellar-sort absolute">
+    <section @click.stop="" class="beer-cellar-sort absolute">
       <span class="beer-cellar-sort__title">Sort beers by</span>
       <span class="beer-cellar-sort__cancel absolute pointer" @click="hideSort"></span>
       <div class="beer-cellar-sort__button-wrapper flex">
@@ -13,7 +13,7 @@
         <button class="beer-cellar-sort__button pointer" :class="{ '--active': sortedBy === 'date' && reversed }" @click="sortBeers('date', true)">Date (new-old)</button>
         <button class="beer-cellar-sort__button pointer" :class="{ '--active': sortedBy === 'date' && !reversed }" @click="sortBeers('date', false)">Date (old-new)</button>
       </div>
-    </div>
+    </section>
   </transition>
 </template>
 
