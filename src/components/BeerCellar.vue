@@ -6,13 +6,13 @@
         <img ref="displaySortButton" class="header__image-item-icon" src="../assets/icons/sort.svg">
       </button>
       <button class="header__button --image pointer" @click="displayFilter = !displayFilter">
-        <img class="header__image-item-icon" src="../assets/icons/filter.svg">
+        <img ref="displayFilterButton" class="header__image-item-icon" src="../assets/icons/filter.svg">
       </button>
       <button class="header__button --image pointer">
         <img class="header__image-item-icon" src="../assets/icons/settings.svg">
       </button>
       <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
-      <beer-cellar-filter v-show="displayFilter"></beer-cellar-filter>
+      <beer-cellar-filter :breweries="breweries" :styles="beerStyles" @hide-filter="displayFilter = false" v-show="displayFilter"></beer-cellar-filter>
     </header>
     <main class="beer-cellar__wrapper">
       <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
@@ -43,7 +43,7 @@ export default {
           id: 0,
           brewery: 'AleSmith',
           name: 'Speedway Stout',
-          style: 'Imperial stout',
+          style: 'Imperial Stout',
           abv: 12,
           quantity: 8,
           size: 47,
@@ -105,6 +105,7 @@ export default {
           status: 'Ageing'
         }
       ],
+      beerStyles: [],
       breweries: [],
       currentDate: Date.now(),
       displayFilter: false,
@@ -141,14 +142,17 @@ export default {
       })
       return this.beers.indexOf(beerItem)
     },
-    getBreweries: function () {
-      var breweries = []
-      this.beers.forEach(function (beer) {
-        if (breweries.indexOf(beer.brewery) === -1) {
-          breweries.push(beer.brewery)
+    getUniquePropertyValues: function (array, key) {
+      var values = []
+      array.forEach(function (item) {
+        if (values.indexOf(item[key]) === -1) {
+          values.push(item[key])
         }
       })
-      this.breweries = breweries
+      values.sort(function (a, b) {
+        return (a > b) ? 1 : -1
+      })
+      return values
     },
     handleClick: function (event) {
       if (event.target !== this.$refs.displaySortButton && this.displaySort) {
@@ -192,7 +196,8 @@ export default {
   },
   created: function () {
     this.sortBeers('name', this.reversed)
-    this.getBreweries()
+    this.breweries = this.getUniquePropertyValues(this.beers, 'brewery')
+    this.beerStyles = this.getUniquePropertyValues(this.beers, 'style')
   }
 }
 </script>
@@ -317,6 +322,42 @@ $header-height: 72px;
     &.--active {
       background: #e3e3e3;
     }
+  }
+}
+
+/* BEER CELLAR FILTER */
+
+.beer-cellar-filter {
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0px 2px 7px 3px rgba(0, 0, 0, 0.25);
+  left: 50%;
+  padding: 12px;
+  top: calc(#{$header-height} - 5px);
+  transform: translateX(-50%);
+  z-index: 500;
+
+  &__title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &__filter-wrapper {
+    margin: 4px 0 0;
+    padding: 8px;
+  }
+
+  &__label {
+    padding-bottom: 2px;
+  }
+
+  &__select {
+    margin-top: 2px;
+    width: 100%;
+  }
+
+  &__checkbox {
+    margin-left: 0;
   }
 }
 
