@@ -2,24 +2,25 @@
   <transition>
     <section class="beer-cellar-filter absolute" @click.stop="">
       <span class="beer-cellar-filter__title">Filter beers by</span>
+      <span class="beer-cellar-filter__cancel absolute pointer" @click="hideFilter"></span>
       <div class="beer-cellar-filter__filter-wrapper">
         <label class="beer-cellar-filter__label" for="breweries">Breweries</label>
-        <select class="beer-cellar-filter__select" id="breweries" name="breweries">
-          <option value="all">All</option>
-          <option v-for="b in breweries" :key="b" value="b">{{ b }}</option>
+        <select class="beer-cellar-filter__select" id="breweries" name="breweries" @change="applyFilters" v-model="breweryFilter">
+          <option value="All">All</option>
+          <option v-for="b in breweries" :key="b" :value="b">{{ b }}</option>
         </select>
       </div>
       <div class="beer-cellar-filter__filter-wrapper">
         <label class="beer-cellar-filter__label" for="styles">Styles</label>
-        <select class="beer-cellar-filter__select" id="styles" name="styles">
-          <option value="all">All</option>
-          <option v-for="s in styles" :key="s" value="s">{{ s }}</option>
+        <select class="beer-cellar-filter__select" id="styles" name="styles" @change="applyFilters" v-model="styleFilter">
+          <option value="All">All</option>
+          <option v-for="s in styles" :key="s" :value="s">{{ s }}</option>
         </select>
       </div>
       <div class="beer-cellar-filter__filter-wrapper">
         <form>
-          <label class="beer-cellar-filter__label">Show only ready</label>
-          <input class="beer-cellar-filter__checkbox block" type="checkbox">
+          <label class="beer-cellar-filter__label">Only show ready</label>
+          <input class="beer-cellar-filter__checkbox block" type="checkbox" @change="applyFilters" v-model="onlyShowReady">
         </form>
       </div>
     </section>
@@ -37,6 +38,21 @@ export default {
     styles: {
       type: Array,
       default: null
+    }
+  },
+  data () {
+    return {
+      breweryFilter: 'All',
+      styleFilter: 'All',
+      onlyShowReady: false
+    }
+  },
+  methods: {
+    applyFilters () {
+      this.$emit('apply-filters', this.breweryFilter, this.styleFilter, this.onlyShowReady)
+    },
+    hideFilter () {
+      this.$emit('hide-filter')
     }
   }
 }

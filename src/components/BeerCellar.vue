@@ -3,19 +3,24 @@
     <header class="header fixed flex">
       <span class="header__title">Beer Cellar</span>
       <button class="header__button --image pointer" @click="displaySort = !displaySort">
-        <img ref="displaySortButton" class="header__image-item-icon" src="../assets/icons/sort.svg">
+        <img ref="sortButton" class="header__image-item-icon" src="../assets/icons/sort.svg">
       </button>
       <button class="header__button --image pointer" @click="displayFilter = !displayFilter">
-        <img ref="displayFilterButton" class="header__image-item-icon" src="../assets/icons/filter.svg">
+        <img ref="filterButton" class="header__image-item-icon" src="../assets/icons/filter.svg">
       </button>
-      <button class="header__button --image pointer">
+      <button class="header__button --image pointer" disabled>
         <img class="header__image-item-icon" src="../assets/icons/settings.svg">
       </button>
       <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
-      <beer-cellar-filter :breweries="breweries" :styles="beerStyles" @hide-filter="displayFilter = false" v-show="displayFilter"></beer-cellar-filter>
+      <beer-cellar-filter :breweries="breweries" :styles="beerStyles" @hide-filter="displayFilter = false" @apply-filters="filterBeers" v-show="displayFilter"></beer-cellar-filter>
     </header>
     <main class="beer-cellar__wrapper">
-      <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
+      <div v-show="!filterIsActive">
+        <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
+      </div>
+      <div v-show="filterIsActive">
+        <beer-cellar-item v-for="beer in filteredBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
+      </div>
       <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
     </main>
   </div>
@@ -110,17 +115,21 @@ export default {
       currentDate: Date.now(),
       displayFilter: false,
       displaySort: false,
+      filteredBeers: [],
+      filterIsActive: false,
       reversed: false,
       sortedBy: '',
       sortedBeers: []
     }
   },
   methods: {
+    // Push a new beer to the beer array
     addNewBeer: function (beer) {
       beer.id = this.beers.length
       this.beers.push(beer)
       this.sortBeers(this.sortedBy, this.reversed)
     },
+    // Reduce quantity by one for the selected beer
     drinkOne: function (id) {
       let quantity
       this.beers.forEach(function (item) {
@@ -133,6 +142,7 @@ export default {
         this.removeBeer(id)
       }
     },
+    // Get the selected beer's position in the array
     getBeerPosition: function (id) {
       let beerItem
       this.beers.forEach(function (beer) {
@@ -142,6 +152,29 @@ export default {
       })
       return this.beers.indexOf(beerItem)
     },
+    // Create a new array according to the active filters and display it
+    // Show all beers if the filters are disabled
+    filterBeers: function (brewery, style, ready) {
+      if (brewery === 'All' && style === 'All' && !ready) {
+        this.filteredBeers = []
+        this.filterIsActive = false
+        return
+      }
+      var beers = []
+      if (brewery !== 'All') {
+        beers = this.parseArray(this.beers, 'brewery', brewery)
+      }
+      if (style !== 'All') {
+        beers.length === 0 ? beers = this.parseArray(this.beers, 'style', style) : beers = this.parseArray(beers, 'style', style)
+      }
+      if (ready) {
+        beers.length === 0 ? beers = this.parseArray(this.beers, 'status', 'Ready') : beers = this.parseArray(beers, 'status', 'Ready')
+      }
+      // sorter listen
+      this.filterIsActive = true
+      this.filteredBeers = beers
+    },
+    // Create an array with all the unique values from a given property
     getUniquePropertyValues: function (array, key) {
       var values = []
       array.forEach(function (item) {
@@ -154,11 +187,26 @@ export default {
       })
       return values
     },
+    // Function for closing popups when the user clicks outside of them
     handleClick: function (event) {
-      if (event.target !== this.$refs.displaySortButton && this.displaySort) {
+      if (event.target !== this.$refs.sortButton && this.displaySort) {
         this.displaySort = false
+      } else if (event.target !== this.$refs.filterButton && this.displayFilter) {
+        this.displayFilter = false
       }
     },
+    // Parse the array and create a new array with objects
+    // where the given property matches the value
+    parseArray: function (array, property, value) {
+      var newArray = []
+      array.forEach(function (item) {
+        if (value === item[property]) {
+          newArray.push(item)
+        }
+      })
+      return newArray
+    },
+    // Delete the selected beer from the array
     removeBeer: function (id) {
       const beers = this.beers
       const position = this.getBeerPosition(id)
@@ -166,10 +214,13 @@ export default {
         beers.splice(position, 1)
       }, 250)
     },
+    // Save changes to the object of the selected beer
     saveBeer: function (beer) {
       const position = this.getBeerPosition(beer.id)
       Vue.set(this.beers, position, beer)
     },
+    // Sort the beer array according to the arguments
+    // and save the results in a new array
     sortBeers: function (key, reverse) {
       const sortedList = this.beers
       if (key === this.sortedBy && reverse === this.reversed) {
@@ -340,6 +391,14 @@ $header-height: 72px;
   &__title {
     font-size: 16px;
     font-weight: 700;
+  }
+
+  &__cancel {
+    background-image: url('../assets/icons/cancel.svg');
+    fill: grey;
+    height: 20px;
+    right: 12px;
+    width: 20px;
   }
 
   &__filter-wrapper {

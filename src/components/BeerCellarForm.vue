@@ -51,7 +51,7 @@
           </div>
           <div class="beer-form__input-wrapper --minimum">
             <label class="beer-form__input-label" for="minimum">Minimum Age</label>
-            <input id="minimum" ref="minimum" class="beer-form__input --small" type="text" inputmode="numeric" placeholder="Years" v-model.number="newBeer.minimumAge" :disabled="newBeer.date !== ''">
+            <input id="minimum" ref="minimum" class="beer-form__input --small" type="text" inputmode="numeric" placeholder="Years" v-model.number="newBeer.minimumAge">
           </div>
         </div>
       </fieldset>
