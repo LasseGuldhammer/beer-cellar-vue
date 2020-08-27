@@ -19,8 +19,8 @@
       </div>
       <div class="beer-cellar-filter__filter-wrapper">
         <form>
-          <label class="beer-cellar-filter__label">Only show ready</label>
-          <input class="beer-cellar-filter__checkbox block" type="checkbox" @change="applyFilters" v-model="onlyShowReady">
+          <label class="beer-cellar-filter__label" for="ready">Only show ready</label>
+          <input class="beer-cellar-filter__checkbox block" id="ready" type="checkbox" @change="applyFilters" v-model="onlyShowReady">
         </form>
       </div>
     </section>
@@ -35,16 +35,21 @@ export default {
       type: Array,
       default: null
     },
+    breweryFilter: {
+      type: String,
+      default: 'All'
+    },
+    onlyShowReady: {
+      type: Boolean,
+      default: false
+    },
     styles: {
       type: Array,
       default: null
-    }
-  },
-  data () {
-    return {
-      breweryFilter: 'All',
-      styleFilter: 'All',
-      onlyShowReady: false
+    },
+    styleFilter: {
+      type: String,
+      default: 'All'
     }
   },
   methods: {

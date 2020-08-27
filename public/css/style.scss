@@ -23,6 +23,13 @@ body {
   min-height: 100vh;
 }
 
+button,
+select {
+  &:focus {
+    outline: none;
+  }
+}
+
 button:disabled {
   cursor: not-allowed;
   opacity: 0.50;

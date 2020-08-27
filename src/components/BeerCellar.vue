@@ -12,13 +12,23 @@
         <img class="header__image-item-icon" src="../assets/icons/settings.svg">
       </button>
       <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
-      <beer-cellar-filter :breweries="breweries" :styles="beerStyles" @hide-filter="displayFilter = false" @apply-filters="filterBeers" v-show="displayFilter"></beer-cellar-filter>
+      <beer-cellar-filter :breweries="breweries" :breweryFilter="breweryFilter" :styles="beerStyles" :styleFilter="styleFilter" :onlyShowReady="onlyShowReady" @hide-filter="displayFilter = false" @apply-filters="filterBeers" v-show="displayFilter"></beer-cellar-filter>
     </header>
+    <!-- <section>
+      <span>Beers: {{ totalQuantity }}</span>
+    </section> -->
+    <section class="beer-cellar__active-filters" v-show="filterIsActive">
+      <!-- <div class="">Filters</div> -->
+      <span class="beer-cellar__active-filter-item pointer inline-block" @click="filterBeers('All', styleFilter, onlyShowReady)" v-show="breweryFilter !== 'All'">{{ breweryFilter }}</span>
+      <span class="beer-cellar__active-filter-item pointer inline-block" @click="filterBeers(breweryFilter, 'All', onlyShowReady)" v-show="styleFilter !== 'All'">{{ styleFilter }}</span>
+      <span class="beer-cellar__active-filter-item pointer inline-block" @click="filterBeers(breweryFilter, styleFilter, false)" v-show="onlyShowReady">Only show ready</span>
+    </section>
     <main class="beer-cellar__wrapper">
       <div v-show="!filterIsActive">
         <beer-cellar-item v-for="beer in sortedBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
       </div>
       <div v-show="filterIsActive">
+        <p class="beer-cellar__no-beers" v-show="filteredBeers.length === 0">No beers match <br>the selected filters</p>
         <beer-cellar-item v-for="beer in filteredBeers" :key="beer.id" :beer="beer" @save-beer="saveBeer" @drink-one="drinkOne" @drink-all="removeBeer"></beer-cellar-item>
       </div>
       <beer-cellar-add-new @add-beer="addNewBeer"></beer-cellar-add-new>
@@ -112,14 +122,26 @@ export default {
       ],
       beerStyles: [],
       breweries: [],
+      breweryFilter: 'All',
       currentDate: Date.now(),
       displayFilter: false,
       displaySort: false,
       filteredBeers: [],
       filterIsActive: false,
+      onlyShowReady: false,
       reversed: false,
       sortedBy: '',
-      sortedBeers: []
+      sortedBeers: [],
+      styleFilter: 'All'
+    }
+  },
+  computed: {
+    totalQuantity () {
+      let quantity = 0
+      this.beers.forEach(function (item) {
+        quantity += item.quantity
+      })
+      return quantity
     }
   },
   methods: {
@@ -128,6 +150,7 @@ export default {
       beer.id = this.beers.length
       this.beers.push(beer)
       this.sortBeers(this.sortedBy, this.reversed)
+      this.getBreweriesAndStyles()
     },
     // Reduce quantity by one for the selected beer
     drinkOne: function (id) {
@@ -142,37 +165,54 @@ export default {
         this.removeBeer(id)
       }
     },
-    // Get the selected beer's position in the array
-    getBeerPosition: function (id) {
-      let beerItem
-      this.beers.forEach(function (beer) {
-        if (id === beer.id) {
-          beerItem = beer
-        }
-      })
-      return this.beers.indexOf(beerItem)
-    },
     // Create a new array according to the active filters and display it
     // Show all beers if the filters are disabled
     filterBeers: function (brewery, style, ready) {
       if (brewery === 'All' && style === 'All' && !ready) {
         this.filteredBeers = []
         this.filterIsActive = false
+        this.breweryFilter = 'All'
+        this.styleFilter = 'All'
+        this.onlyShowReady = false
         return
       }
       var beers = []
       if (brewery !== 'All') {
+        this.breweryFilter = brewery
         beers = this.parseArray(this.beers, 'brewery', brewery)
+      } else {
+        this.breweryFilter = 'All'
       }
       if (style !== 'All') {
+        this.styleFilter = style
         beers.length === 0 ? beers = this.parseArray(this.beers, 'style', style) : beers = this.parseArray(beers, 'style', style)
+      } else {
+        this.styleFilter = 'All'
       }
       if (ready) {
+        this.onlyShowReady = true
         beers.length === 0 ? beers = this.parseArray(this.beers, 'status', 'Ready') : beers = this.parseArray(beers, 'status', 'Ready')
+      } else {
+        this.onlyShowReady = false
       }
       // sorter listen
       this.filterIsActive = true
       this.filteredBeers = beers
+    },
+    // Get the selected beer's position in the array
+    getBeerPosition: function (id) {
+      let beerItem
+      this.beers.forEach(function (item) {
+        if (id === item.id) {
+          beerItem = item
+        }
+      })
+      return this.beers.indexOf(beerItem)
+    },
+    getBreweriesAndStyles: function () {
+      console.log('get')
+      this.breweries = this.getUniquePropertyValues(this.beers, 'brewery')
+      this.beerStyles = this.getUniquePropertyValues(this.beers, 'style')
     },
     // Create an array with all the unique values from a given property
     getUniquePropertyValues: function (array, key) {
@@ -195,7 +235,7 @@ export default {
         this.displayFilter = false
       }
     },
-    // Parse the array and create a new array with objects
+    // Parse an array of objects and create a new array
     // where the given property matches the value
     parseArray: function (array, property, value) {
       var newArray = []
@@ -212,12 +252,14 @@ export default {
       const position = this.getBeerPosition(id)
       setTimeout(function () {
         beers.splice(position, 1)
+        this.getBreweriesAndStyles()
       }, 250)
     },
-    // Save changes to the object of the selected beer
+    // Save changes to the selected beer
     saveBeer: function (beer) {
       const position = this.getBeerPosition(beer.id)
       Vue.set(this.beers, position, beer)
+      this.getBreweriesAndStyles()
     },
     // Sort the beer array according to the arguments
     // and save the results in a new array
@@ -247,8 +289,7 @@ export default {
   },
   created: function () {
     this.sortBeers('name', this.reversed)
-    this.breweries = this.getUniquePropertyValues(this.beers, 'brewery')
-    this.beerStyles = this.getUniquePropertyValues(this.beers, 'style')
+    this.getBreweriesAndStyles()
   }
 }
 </script>
@@ -276,8 +317,36 @@ $header-height: 72px;
     padding: $wrapper-padding;
   }
 
+  &__no-beers {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 120%;
+    text-align: center;
+  }
+
   &__beer-item-edit {
     display: none;
+  }
+
+  &__active-filters {
+    padding: 8px 16px 0;
+  }
+
+  &__active-filter-item {
+    background: #ffffff;
+    border-radius: 2px;
+    font-size: 12px;
+    margin-bottom: 4px;
+    margin-right: 8px;
+    padding: 4px 10px 4px 4px;
+
+    &::after {
+      content: "x";
+      position: relative;
+      right: -7px;
+      top: -5px;
+    }
   }
 }
 
