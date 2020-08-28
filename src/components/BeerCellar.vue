@@ -149,6 +149,9 @@ export default {
     addNewBeer: function (beer) {
       beer.id = this.beers.length
       this.beers.push(beer)
+      if (this.filterIsActive) {
+        this.filteredBeers(this.breweryFilter, this.styleFilter, this.onlyShowReady)
+      }
       this.sortBeers(this.sortedBy, this.reversed)
       this.getBreweriesAndStyles()
     },
@@ -209,8 +212,8 @@ export default {
       })
       return this.beers.indexOf(beerItem)
     },
+    // Collect all unique breweries and styles
     getBreweriesAndStyles: function () {
-      console.log('get')
       this.breweries = this.getUniquePropertyValues(this.beers, 'brewery')
       this.beerStyles = this.getUniquePropertyValues(this.beers, 'style')
     },
@@ -248,10 +251,9 @@ export default {
     },
     // Delete the selected beer from the array
     removeBeer: function (id) {
-      const beers = this.beers
       const position = this.getBeerPosition(id)
-      setTimeout(function () {
-        beers.splice(position, 1)
+      setTimeout(() => {
+        this.beers.splice(position, 1)
         this.getBreweriesAndStyles()
       }, 250)
     },

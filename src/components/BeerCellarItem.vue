@@ -145,7 +145,7 @@ export default {
       if (this.expanded) {
         body.classList.add('no-scroll')
       } else {
-        setTimeout(function () {
+        setTimeout(() => {
           body.classList.remove('no-scroll')
         }, 250)
       }
