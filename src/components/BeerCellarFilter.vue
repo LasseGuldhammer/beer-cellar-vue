@@ -5,22 +5,26 @@
       <span class="beer-cellar-filter__cancel absolute pointer" @click="hideFilter"></span>
       <div class="beer-cellar-filter__filter-wrapper">
         <label class="beer-cellar-filter__label" for="breweries">Breweries</label>
-        <select class="beer-cellar-filter__select" id="breweries" name="breweries" @change="applyFilters">
-          <option value="All">All</option>
-          <option v-for="b in breweries" :key="b" :value="b">{{ b }}</option>
+        <div class="beer-cellar-filter__select-wrapper grid relative">
+          <select class="beer-cellar-filter__select" id="breweries" name="breweries" @change="applyFilters" v-model="brewery">
+            <option value="All">All</option>
+            <option v-for="b in breweries" :key="b" :value="b">{{ b }}</option>
         </select>
+        </div>
       </div>
       <div class="beer-cellar-filter__filter-wrapper">
         <label class="beer-cellar-filter__label" for="styles">Styles</label>
-        <select class="beer-cellar-filter__select" id="styles" name="styles" @change="applyFilters">
-          <option value="All">All</option>
-          <option v-for="s in styles" :key="s" :value="s">{{ s }}</option>
+        <div class="beer-cellar-filter__select-wrapper grid relative">
+          <select class="beer-cellar-filter__select" id="styles" name="styles" @change="applyFilters" v-model="style">
+            <option value="All">All</option>
+            <option v-for="s in styles" :key="s" :value="s">{{ s }}</option>
         </select>
+        </div>
       </div>
       <div class="beer-cellar-filter__filter-wrapper">
         <form>
           <label class="beer-cellar-filter__label" for="ready">Only show ready</label>
-          <input class="beer-cellar-filter__checkbox block" id="ready" type="checkbox" @change="applyFilters">
+          <input class="beer-cellar-filter__checkbox block" id="ready" type="checkbox" @change="applyFilters" v-model="ready">
         </form>
       </div>
     </section>
@@ -52,12 +56,30 @@ export default {
       default: 'All'
     }
   },
+  data () {
+    return {
+      brewery: 'All',
+      style: 'All',
+      ready: false
+    }
+  },
   methods: {
     applyFilters () {
-      this.$emit('apply-filters', this.breweryFilter, this.styleFilter, this.onlyShowReady)
+      this.$emit('apply-filters', this.brewery, this.style, this.ready)
     },
     hideFilter () {
       this.$emit('hide-filter')
+    }
+  },
+  watch: {
+    breweryFilter (newValue, oldValue) {
+      this.brewery = newValue
+    },
+    styleFilter (newValue, oldValue) {
+      this.style = newValue
+    },
+    onlyShowReady (newValue, oldValue) {
+      this.ready = newValue
     }
   }
 }

@@ -14,9 +14,6 @@
       <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
       <beer-cellar-filter :breweries="breweries" :breweryFilter="breweryFilter" :styles="beerStyles" :styleFilter="styleFilter" :onlyShowReady="onlyShowReady" @hide-filter="displayFilter = false" @apply-filters="filterBeers" v-show="displayFilter"></beer-cellar-filter>
     </header>
-    <!-- <section>
-      <span>Beers: {{ totalQuantity }}</span>
-    </section> -->
     <section class="beer-cellar__active-filters" v-show="filterIsActive">
       <!-- <div class="">Filters</div> -->
       <span class="beer-cellar__active-filter-item pointer inline-block" @click="filterBeers('All', styleFilter, onlyShowReady)" v-show="breweryFilter !== 'All'">{{ breweryFilter }}</span>
@@ -150,7 +147,7 @@ export default {
       beer.id = this.beers.length
       this.beers.push(beer)
       if (this.filterIsActive) {
-        this.filteredBeers(this.breweryFilter, this.styleFilter, this.onlyShowReady)
+        this.filterBeers(this.breweryFilter, this.styleFilter, this.onlyShowReady)
       }
       this.sortBeers(this.sortedBy, this.reversed)
       this.getBreweriesAndStyles()
@@ -172,11 +169,13 @@ export default {
     // Show all beers if the filters are disabled
     filterBeers: function (brewery, style, ready) {
       if (brewery === 'All' && style === 'All' && !ready) {
-        this.filteredBeers = []
-        this.filterIsActive = false
         this.breweryFilter = 'All'
         this.styleFilter = 'All'
         this.onlyShowReady = false
+        this.filteredBeers = []
+        this.filterIsActive = false
+        this.sortBeers(this.sortedBy, this.reversed)
+        console.log('filter disabled')
         return
       }
       var beers = []
@@ -198,7 +197,7 @@ export default {
       } else {
         this.onlyShowReady = false
       }
-      // sorter listen
+      this.sortBeers(this.sortedBy, this.reversed)
       this.filterIsActive = true
       this.filteredBeers = beers
     },
@@ -265,7 +264,7 @@ export default {
     },
     // Sort the beer array according to the arguments
     // and save the results in a new array
-    sortBeers: function (key, reverse) {
+    /* sortBeers: function (key, reverse) {
       const sortedList = this.beers
       if (key === this.sortedBy && reverse === this.reversed) {
         return
@@ -287,9 +286,37 @@ export default {
       if (this.displaySort) {
         this.displaySort = false
       }
+    } */
+    sortBeers: function (key, reverse) {
+      /* if (key === this.sortedBy && reverse === this.reversed) {
+        return
+      } */
+      var sortedList = []
+      this.filterIsActive ? sortedList = this.filteredBeers : sortedList = this.beers
+      if (key !== this.sortedBy && !reverse) {
+        console.log('sort 1')
+        sortedList.sort(function (a, b) {
+          return (a[key] > b[key]) ? 1 : -1
+        })
+      } else if (key !== this.sortedBy && reverse) {
+        console.log('sort 2')
+        sortedList.sort(function (a, b) {
+          return (a[key] > b[key]) ? -1 : 1
+        })
+      } else {
+        console.log('sort 3')
+        sortedList = sortedList.reverse()
+      }
+      this.sortedBy = key
+      this.reversed = reverse
+      if (this.displaySort) {
+        this.displaySort = false
+      }
+      this.filterIsActive ? this.filteredBeers = sortedList : this.sortedBeers = sortedList
     }
   },
   created: function () {
+    console.log('created')
     this.sortBeers('name', this.reversed)
     this.getBreweriesAndStyles()
   }
@@ -481,8 +508,31 @@ $header-height: 72px;
     padding-bottom: 2px;
   }
 
-  &__select {
+  &__select-wrapper {
+    align-items: center;
+    width: 100%;
+    border: 1px solid #777777;
+    border-radius: 4px;
+    padding: 0.25em 0.5em;
     margin-top: 2px;
+    font-size: inherit;
+    grid-template-areas: "select";
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+
+    &::after {
+      content: "";
+      width: 0.8em;
+      height: 0.5em;
+      justify-self: end;
+      grid-area: select;
+      background-color: #777777;
+      clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    }
+  }
+
+  &__select {
     width: 100%;
   }
 
