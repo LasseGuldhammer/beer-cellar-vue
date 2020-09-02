@@ -146,11 +146,11 @@ export default {
     addNewBeer: function (beer) {
       beer.id = this.beers.length
       this.beers.push(beer)
+      this.sortBeers(this.sortedBy, this.reversed)
+      this.getBreweriesAndStyles()
       if (this.filterIsActive) {
         this.filterBeers(this.breweryFilter, this.styleFilter, this.onlyShowReady)
       }
-      this.sortBeers(this.sortedBy, this.reversed)
-      this.getBreweriesAndStyles()
     },
     // Reduce quantity by one for the selected beer
     drinkOne: function (id) {
@@ -175,7 +175,6 @@ export default {
         this.filteredBeers = []
         this.filterIsActive = false
         this.sortBeers(this.sortedBy, this.reversed)
-        console.log('filter disabled')
         return
       }
       var beers = []
@@ -197,9 +196,9 @@ export default {
       } else {
         this.onlyShowReady = false
       }
-      this.sortBeers(this.sortedBy, this.reversed)
       this.filterIsActive = true
       this.filteredBeers = beers
+      this.sortBeers(this.sortedBy, this.reversed)
     },
     // Get the selected beer's position in the array
     getBeerPosition: function (id) {
@@ -264,48 +263,17 @@ export default {
     },
     // Sort the beer array according to the arguments
     // and save the results in a new array
-    /* sortBeers: function (key, reverse) {
-      const sortedList = this.beers
-      if (key === this.sortedBy && reverse === this.reversed) {
-        return
-      } else if (key !== this.sortedBy && !reverse) {
-        sortedList.sort(function (a, b) {
-          return (a[key] > b[key]) ? 1 : -1
-        })
-        this.sortedBeers = sortedList
-      } else if (key !== this.sortedBy && reverse) {
-        sortedList.sort(function (a, b) {
-          return (a[key] > b[key]) ? -1 : 1
-        })
-        this.sortedBeers = sortedList
-      } else {
-        this.sortedBeers = this.sortedBeers.reverse()
-      }
-      this.sortedBy = key
-      this.reversed = reverse
-      if (this.displaySort) {
-        this.displaySort = false
-      }
-    } */
     sortBeers: function (key, reverse) {
-      /* if (key === this.sortedBy && reverse === this.reversed) {
-        return
-      } */
-      var sortedList = []
-      this.filterIsActive ? sortedList = this.filteredBeers : sortedList = this.beers
-      if (key !== this.sortedBy && !reverse) {
-        console.log('sort 1')
-        sortedList.sort(function (a, b) {
-          return (a[key] > b[key]) ? 1 : -1
-        })
-      } else if (key !== this.sortedBy && reverse) {
-        console.log('sort 2')
+      const sortedList = this.filterIsActive ? this.filteredBeers : this.beers
+
+      if (reverse) {
         sortedList.sort(function (a, b) {
           return (a[key] > b[key]) ? -1 : 1
         })
       } else {
-        console.log('sort 3')
-        sortedList = sortedList.reverse()
+        sortedList.sort(function (a, b) {
+          return (a[key] > b[key]) ? 1 : -1
+        })
       }
       this.sortedBy = key
       this.reversed = reverse
@@ -316,7 +284,6 @@ export default {
     }
   },
   created: function () {
-    console.log('created')
     this.sortBeers('name', this.reversed)
     this.getBreweriesAndStyles()
   }
