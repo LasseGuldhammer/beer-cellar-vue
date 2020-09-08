@@ -71,7 +71,6 @@ export default {
   data () {
     return {
       displayForm: false,
-      editing: false,
       expanded: false,
       ready: false,
       months: 0,
@@ -126,15 +125,9 @@ export default {
       }
       this.$emit('drink-one', this.beer.id)
     },
-    edit: function (beer) {
-      if (this.editing) {
-        this.$emit('save-beer', beer)
-      }
-      this.editing = !this.editing
-    },
     saveBeer: function (beer) {
       this.$emit('save-beer', beer)
-      this.displayForm = !this.displayForm
+      this.toggleForm()
     },
     toggleForm: function () {
       this.displayForm = !this.displayForm

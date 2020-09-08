@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "firebase": "^7.19.1",
     "minimist": "^1.2.3",
     "normalize.css": "^8.0.1",
     "serialize-javascript": "^3.1.0",
-    "vue": "^2.6.12"
+    "vue": "^2.6.12",
+    "vuefire": "^2.2.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
