@@ -40,33 +40,9 @@ import BeerCellarAddNew from './BeerCellarAddNew.vue'
 import BeerCellarSort from './BeerCellarSort.vue'
 import BeerCellarFilter from './BeerCellarFilter'
 import { firestorePlugin } from 'vuefire'
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import { db } from '../assets/js/db'
 
 Vue.use(firestorePlugin)
-
-// Get a Firestore instance
-export const db = firebase
-  .initializeApp({ projectId: 'beer-cellar-0' })
-  .firestore()
-
-db.collection('users').add({
-  first: 'Alan',
-  middle: 'Mathison',
-  last: 'Turing',
-  born: 1912
-})
-  .then(function (docRef) {
-    console.log('Document written with ID: ', docRef.id)
-  })
-  .catch(function (error) {
-    console.error('Error adding document: ', error)
-  })
-
-// Export types that exists in Firestore
-// This is not always necessary, but it's used in other examples
-const { Timestamp, GeoPoint } = firebase.firestore
-export { Timestamp, GeoPoint }
 
 export default {
   name: 'BeerCellar',
