@@ -134,7 +134,7 @@ export default {
       sortedBy: '',
       sortedBeers: [],
       styleFilter: 'All',
-      documents: []
+      users: []
     }
   },
   computed: {
@@ -293,7 +293,7 @@ export default {
     this.getBreweriesAndStyles()
   },
   firestore: {
-    documents: db.collection('documents')
+    users: db.collection('users')
   }
 }
 </script>
