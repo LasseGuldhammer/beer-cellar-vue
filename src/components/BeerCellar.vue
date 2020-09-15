@@ -13,6 +13,7 @@
       </button>
       <beer-cellar-sort :sortedBy="sortedBy" :reversed="reversed" @hide-sort="displaySort = false" @sort-beers="sortBeers" v-show="displaySort"></beer-cellar-sort>
       <beer-cellar-filter :breweries="breweries" :breweryFilter="breweryFilter" :styles="beerStyles" :styleFilter="styleFilter" :onlyShowReady="onlyShowReady" @hide-filter="displayFilter = false" @apply-filters="filterBeers" v-show="displayFilter"></beer-cellar-filter>
+      <section id="firebaseui-auth-container"></section>
     </header>
     <section class="beer-cellar__active-filters" v-show="filterIsActive">
       <!-- <div class="">Filters</div> -->
@@ -41,6 +42,10 @@ import BeerCellarSort from './BeerCellarSort.vue'
 import BeerCellarFilter from './BeerCellarFilter'
 import { firestorePlugin } from 'vuefire'
 import { db } from '../assets/js/db'
+
+import firebase from 'firebase'
+import * as firebaseui from 'firebaseui'
+import 'firebaseui/dist/firebaseui.css'
 
 Vue.use(firestorePlugin)
 
@@ -291,6 +296,21 @@ export default {
   created: function () {
     this.sortBeers('name', this.reversed)
     this.getBreweriesAndStyles()
+  },
+  mounted () {
+    let ui = firebaseui.auth.AuthUI.getInstance()
+    if (!ui) {
+      ui = new firebaseui.auth.AuthUI(firebase.auth())
+    }
+    var uiConfig = {
+      signInFlow: 'popup',
+      signInOptions: [
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID
+      ]
+    }
+    ui.start('#firebaseui-auth-container', uiConfig)
   },
   firestore: {
     users: db.collection('users')
