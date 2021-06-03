@@ -1,5 +1,7 @@
 # beer-cellar
 
+This Vue version of the app is being replaced by an Angular app.
+
 ## Project setup
 ```
 npm install
